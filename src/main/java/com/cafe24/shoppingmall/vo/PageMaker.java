@@ -5,30 +5,28 @@ import lombok.Data;
 @Data
 public class PageMaker {
 
-	private int start, end, total;
+	private int start, end, totalCount;
 	private boolean prev, next;
 	private Criteria cri;
-	// 
-	public static final int PER_PAGE_NUM = 12;
+	// 한페이지에 보여지는 게시글의 수
+	public static final int PER_PAGE_SIZE = 12;
 	
-
-	public PageMaker(Criteria cri, int total) {
+	public PageMaker(Criteria cri, int totalCount) {
 		this.cri = cri;
-		this.total = total;
-		int totalPage = (int) Math.ceil(this.total / PER_PAGE_NUM);
-		this.cri.setPage(cri.getPage() > totalPage ? totalPage : cri.getPage());
+		this.totalCount = totalCount;
+		int endPage = (int) Math.ceil(this.totalCount / PER_PAGE_SIZE);
+		this.cri.setPage(cri.getPage() > endPage ? endPage : cri.getPage());
 		setUp();
 	}
 
 	private void setUp() {
 		end = ((cri.getPage() - 1) / 10) * 10 + 10;
 		start = end - 9;
-		if (total < end * PER_PAGE_NUM) {
-			end = (int) (total / PER_PAGE_NUM)+ 1;
+		if (totalCount < end * PER_PAGE_SIZE) {
+			end = (int) (totalCount / PER_PAGE_SIZE) + 1;
 		}
-
 		prev = start != 1 ? true : false;
-		next = end * PER_PAGE_NUM <= total ? true : false;
+		next = end * PER_PAGE_SIZE <= totalCount ? true : false;
 		
 	}
 
