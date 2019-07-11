@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.cafe24.shoppingmall.vo.Criteria;
+import com.cafe24.shoppingmall.domain.Criteria;
 
 public interface GenericController<T, K> {
 	

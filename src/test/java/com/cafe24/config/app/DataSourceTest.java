@@ -15,7 +15,7 @@ import com.cafe24.shoppingmall.config.AppConfig;
 import com.cafe24.shoppingmall.config.WebConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfig.class, WebConfig.class })
+@ContextConfiguration(classes = {DBConfig.class})
 @WebAppConfiguration
 public class DataSourceTest {
 

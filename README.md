@@ -27,3 +27,10 @@
 
 --------------------------------------------
 
+#### Day4
+- 기본 Controller, Service, Dao 등에서 사용할 interface 설계 수정
+- Validation
+     - Spring에서 지워하는 @Valid 어노테이션 테스트
+- VO작업 및 ERD 수정
+- RESTFul 설계 수립
+    - ![](images/Swagger_API.PNG)

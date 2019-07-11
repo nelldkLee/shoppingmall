@@ -1,4 +1,4 @@
-package com.cafe24.shoppingmall.vo;
+package com.cafe24.shoppingmall.domain;
 
 import lombok.Data;
 
