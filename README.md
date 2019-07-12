@@ -34,3 +34,17 @@
 - VO작업 및 ERD 수정
 - RESTFul 설계 수립
     - ![](images/Swagger_API.PNG)
+
+#### Day5
+- TDD 회원가입 유효성 체크
+    - ![](images/회원가입_유효성체크.PNG)
+
+#### 이슈사항
+- 유효성 체크 Exception을 받는 위치 문제로 고민
+    - Cotroller 단에서 @valid가 명시된 매개변수 다음 인자로 BindResult를 통한 해결방식
+    - @ControllerAdvice 어노테이션을 통해 Exception 핸들러를 통한 해결방식
+    ```
+    공통단에서 처리 하는 방식으로 정함. 역할과 책임을 분리하여 Controller에선 유효성 부분을 없애는 방식. 
+    회원 뿐만 아니라 상품 및 주문 Controller에서도 @ControllerAdvice에 basePackages에 패키지 추가하면 간단히 끝남
+    ```
+
