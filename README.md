@@ -48,3 +48,24 @@
     회원 뿐만 아니라 상품 및 주문 Controller에서도 @ControllerAdvice에 basePackages에 패키지 추가하면 간단히 끝남
     ```
 
+### 3주차
+#### Day1
+- Repository 인터페이스 구성
+```java
+public interface GenericRepository<T, K> {
+
+	public int insert(T vo) throws Exception;
+
+	public T read(K key) throws Exception;
+
+	public int update(T vo) throws Exception;
+
+	public int delete(K key) throws Exception;
+
+	public List<T> getList(Criteria cri) throws Exception;
+}
+```
+- DAO TDD 작업 진행 중
+![](images/DAO테스트.PNG)
+- DAO TDD를 통한 erd 수정
+- MariaDB 유저 생성 및 권한 부여 설정

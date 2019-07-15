@@ -16,13 +16,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MemberVO {
 	
-	public MemberVO(String id, String memberName, String password, String email, String telephone, String zipcode,
+	public MemberVO(String id, String memberName, String password, String email, String telephone, String gender, String zipcode,
 			String normalAddress, String extendAddress) {
 		this.id = id;
 		this.memberName = memberName;
 		this.password = password;
 		this.email = email;
 		this.telephone = telephone;
+		this.gender = gender;
 		this.zipcode = zipcode;
 		this.normalAddress = normalAddress;
 		this.extendAddress = extendAddress;
@@ -38,6 +39,7 @@ public class MemberVO {
 	private String email;
     @Pattern(regexp = "[0-9]{10,11}", message = ValidationMessage.TELEPHONE_PATTERN)
 	private String telephone;
+    private String gender;
 	private Date regDate;
 	private String zipcode;
 	private String normalAddress;

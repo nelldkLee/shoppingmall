@@ -48,7 +48,7 @@ public class MemberControllerTest {
 
     @Test
     public void 테스트_1_회원가입데이터_유효성체크_이메일_패턴() throws Exception {
-    	MemberVO memberVO = new MemberVO("testID","이동규","qwerQ1234!@","dongkyuo#naver.com","01073437248","46212","경기도 성남시 중원구", "상대원 3동 2344 번지 2층");
+    	MemberVO memberVO = new MemberVO("testID","이동규","qwerQ1234!@","dongkyuo#naver.com","01073437248","male", "46212","경기도 성남시 중원구", "상대원 3동 2344 번지 2층");
     	
         mockMvc.perform(post("/api/member")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -62,7 +62,7 @@ public class MemberControllerTest {
     }
     @Test
     public void 테스트_2_회원가입데이터_유효성체크_전화번호_개수부족() throws Exception {
-    	MemberVO memberVO = new MemberVO("testID","이동규","qwerQ1234!@","dongkyuo@naver.com","01078","46212","경기도 성남시 중원구", "상대원 3동 2344 번지 2층");
+    	MemberVO memberVO = new MemberVO("testID","이동규","qwerQ1234!@","dongkyuo@naver.com","01078","male","46212","경기도 성남시 중원구", "상대원 3동 2344 번지 2층");
     	
         mockMvc.perform(post("/api/member")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -76,7 +76,7 @@ public class MemberControllerTest {
     }
     @Test
     public void 테스트_3_회원가입데이터_유효성체크_전화번호_개수초과() throws Exception {
-    	MemberVO memberVO = new MemberVO("testID","이동규","qwerQ1234!@","dongkyuo@naver.com","0107342237248","46212","경기도 성남시 중원구", "상대원 3동 2344 번지 2층");
+    	MemberVO memberVO = new MemberVO("testID","이동규","qwerQ1234!@","dongkyuo@naver.com","0107342237248","male","46212","경기도 성남시 중원구", "상대원 3동 2344 번지 2층");
     	
         mockMvc.perform(post("/api/member")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -90,7 +90,7 @@ public class MemberControllerTest {
     }
     @Test
     public void 테스트_4_회원가입데이터_유효성체크_전화번호_빈칸체크() throws Exception {
-    	MemberVO memberVO = new MemberVO("testID","이동규","qwerQ1234!@","dongkyuo@naver.com","","46212","경기도 성남시 중원구", "상대원 3동 2344 번지 2층");
+    	MemberVO memberVO = new MemberVO("testID","이동규","qwerQ1234!@","dongkyuo@naver.com","","male","46212","경기도 성남시 중원구", "상대원 3동 2344 번지 2층");
     	
         mockMvc.perform(post("/api/member")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -104,10 +104,25 @@ public class MemberControllerTest {
     }
     @Test
     public void 테스트_5_회원가입데이터_유효성체크_패스워드_정규식체크() throws Exception {
-    	MemberVO memberVO = new MemberVO("testID","이동규","qwe1234","dongkyuo@naver.com","","46212","경기도 성남시 중원구", "상대원 3동 2344 번지 2층");
+    	MemberVO memberVO = new MemberVO("testID","이동규","qwe1234","dongkyuo@naver.com","","male","46212","경기도 성남시 중원구", "상대원 3동 2344 번지 2층");
     	
         mockMvc.perform(post("/api/member")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(new Gson().toJson(memberVO))
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.result", is("fail")))
+                .andExpect(jsonPath("$.data[0].defaultMessage", is(ValidationMessage.PASSWORD_PATTERN)))
+                .andExpect(jsonPath("$.data[0].field", is("password")));
+    }
+    
+    @Test
+    public void 테스트_5_회원권한체크() throws Exception {
+    	MemberVO memberVO = new MemberVO("testID","이동규","qwe1234","dongkyuo@naver.com","","male","46212","경기도 성남시 중원구", "상대원 3동 2344 번지 2층");
+    	
+        mockMvc.perform(post("/api/member")
+        		.contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(new Gson().toJson(memberVO))
         )
                 .andExpect(status().isOk())

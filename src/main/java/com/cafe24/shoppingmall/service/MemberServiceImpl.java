@@ -2,11 +2,16 @@ package com.cafe24.shoppingmall.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.cafe24.shoppingmall.domain.Criteria;
 import com.cafe24.shoppingmall.domain.MemberVO;
 
+
+@Service
 public class MemberServiceImpl implements MemberService{
 
+	
 	@Override
 	public void register(MemberVO vo) throws Exception {
 		// TODO Auto-generated method stub
