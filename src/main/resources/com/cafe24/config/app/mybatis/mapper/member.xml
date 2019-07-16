@@ -4,14 +4,48 @@
 <mapper namespace="member">
 	
 	<insert id="insert" parameterType="membervo">
-		INSERT INTO member(id, member_name, email, telephone, gender, zipcode, normal_address, extend_address) 
-			VALUES(#{id}, #{memberName}, #{email}, #{telephone}, #{gender}, #{zipcode}, #{normalAddress}, #{extendAddress}) 
+		INSERT INTO member(id, member_name, password, email, telephone, gender, zipcode, normal_address, extend_address) 
+			VALUES(#{id}, #{memberName},#{password}, #{email}, #{telephone}, #{gender}, #{zipcode}, #{normalAddress}, #{extendAddress})
+			
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			select
+			last_insert_id()
+		</selectKey> 
 	</insert>
+	
+	<select id="select" resultType="membervo" parameterType="long">
+		SELECT 
+			member_no, id, member_name, email, telephone, gender, regdate, zipcode, normal_address, extend_address 
+		FROM member WHERE member_no = #{no}
+	</select>
 	
 	<select id="findByEmail" resultType="membervo" parameterType="string">
 		SELECT 
-			member_no, id, member_name, email, telephone, gender, birth, regdate, zipcode, normal_address, extend_address 
+			member_no, id, member_name, email, telephone, gender,  regdate, zipcode, normal_address, extend_address 
 		FROM member WHERE id = #{id}
+	</select>
+	
+	<update id="update" parameterType="membervo">
+		UPDATE member 
+			SET telephone = #{telephone}, 
+				zipcode = #{zipcode},
+				normal_address = #{normalAddress},
+				extend_address = #{extendAddress} 
+		WHERE member_no = #{no}
+	</update>
+	
+	<delete id="delete" parameterType="long">
+		DELETE from member WHERE member_no = #{no} 
+	</delete>
+	
+	<select id="getList" parameterType="criteria" resultType="membervo">
+		SELECT member_no, id, member_name, email, telephone, gender,  regdate, zipcode, normal_address, extend_address 
+			FROM member 
+		ORDER BY member_no DESC LIMIT #{limitStart}, #{perPageSize}  
+	</select>
+	
+	<select id="getTotal" resultType="int">
+		SELECT count(*) from member
 	</select>
 	
 </mapper>

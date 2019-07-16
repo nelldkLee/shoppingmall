@@ -28,6 +28,7 @@ public class MemberVO {
 		this.normalAddress = normalAddress;
 		this.extendAddress = extendAddress;
 	}
+	private Long no;
 	@NotBlank(message = ValidationMessage.ID_BLANK)
 	private String id;
 	@NotBlank(message = ValidationMessage.MEMBER_NAME_BLANK)
@@ -44,5 +45,4 @@ public class MemberVO {
 	private String zipcode;
 	private String normalAddress;
 	private String extendAddress;
-	    
 }

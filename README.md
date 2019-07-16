@@ -69,3 +69,10 @@ public interface GenericRepository<T, K> {
 ![](images/DAO테스트.PNG)
 - DAO TDD를 통한 erd 수정
 - MariaDB 유저 생성 및 권한 부여 설정
+
+#### Day2
+- DataAccess 영역 TDD 작성
+
+#### 이슈사항
+- DataAccess 영역 TDD 작성 시 insert, get, list, update, delete 등의 테스트를 진행하는데 앞서 deleteAll을 무조건 해야하는가라는 부분
+

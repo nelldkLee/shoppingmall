@@ -9,12 +9,13 @@ import org.springframework.stereotype.Repository;
 import com.cafe24.shoppingmall.domain.Criteria;
 import com.cafe24.shoppingmall.domain.MemberVO;
 
+import lombok.Data;
+
 @Repository
 public class MemberDaoImpl implements MemberDao{
 
-
 	@Autowired
-	private SqlSession sqlSession;
+	public SqlSession sqlSession;
 
 	@Override
 	public int insert(MemberVO vo) throws Exception {
@@ -23,33 +24,27 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public MemberVO read(Long key) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("member.select", key);
 	}
 
 	@Override
 	public int update(MemberVO vo) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.update("member.update", vo);
 	}
 
 	@Override
 	public int delete(Long key) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.delete("member.delete", key);
 	}
 
 	@Override
 	public List<MemberVO> getList(Criteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectList("member.getList", cri);
 	}
 
 	@Override
 	public int getTotal(Criteria cri) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.selectOne("member.getTotal", cri);
 	}
-	
 	
 }

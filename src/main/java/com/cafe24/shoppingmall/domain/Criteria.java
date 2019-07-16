@@ -9,7 +9,17 @@ public class Criteria {
 	private String type;
 	private String keyword;
 	
+	public Criteria() {
+		this.page = 1;
+	}
+	
 	public void setPage(int page) {
 		this.page = page < 0 ? 1 : page;
+	}
+	public int getLimitStart() {
+		return (this.page-1) * PageMaker.PER_PAGE_SIZE;
+	}
+	public int getPerPageSize() {
+		return PageMaker.PER_PAGE_SIZE;
 	}
 }
