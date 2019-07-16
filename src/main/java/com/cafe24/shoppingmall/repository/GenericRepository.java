@@ -6,14 +6,16 @@ import com.cafe24.shoppingmall.domain.Criteria;
 
 public interface GenericRepository<T, K> {
 
-	public int insert(T vo) throws Exception;
+	public int insert(T vo);
 
-	public T read(K key) throws Exception;
+	public T read(K key);
 
-	public int update(T vo) throws Exception;
+	public int update(T vo);
 
-	public int delete(K key) throws Exception;
+	public int delete(K key);
 
-	public List<T> getList(Criteria cri) throws Exception;
+	public List<T> getList(Criteria cri);
+	
+	public int getTotal(Criteria cri);
 
 }

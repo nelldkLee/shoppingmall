@@ -9,8 +9,6 @@ public class MainController {
 	@RequestMapping("/")
 	public String mainPage() {
 		System.out.println("메인페이지");
-		
-		
 		return "index";
 	}
 }

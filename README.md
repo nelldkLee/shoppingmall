@@ -72,7 +72,17 @@ public interface GenericRepository<T, K> {
 
 #### Day2
 - DataAccess 영역 TDD 작성
+- 기본 TDD 틀에 따라 일정 정리 및 계획 수립.
 
 #### 이슈사항
 - DataAccess 영역 TDD 작성 시 insert, get, list, update, delete 등의 테스트를 진행하는데 앞서 deleteAll을 무조건 해야하는가라는 부분
-
+    - dummy data에 따라 list의 옳고 그름이 결정되는 바. list는 자동화 테스트 제외.
+- 'Service Layer와 Repository Layer에서 판단을 내리는 역할을 누가 할것인가?'라는 고민
+    - Repository Layer는 Data를 JDBC Connectoin과 연결하고 데이터를 가져오는 역할에 집중
+    - Service Layer에서 Transaction 등의 처리와 함께 판단은 Service Layer에서 하는 걸로 정함. 
+- 아이디 중복검사를 통과한 상황이며 가입을 진행 중 다른 여러명이 같은 아이디로 중복검사를 통과하였을 시 제어를 하는 부분이 없다.
+    - 아이디는 Unique하기 때문에 나중에 가입 하는 사람은 SqlException이 발생할 것으로 판단된다.
+    - SqlException을 잡아서 
+- Repository Layer에서 sqlSession의 메소드 호출 시 SqlException이 발생한다.
+    - checked Exception으로 계속 throw 해야할지 try catch로 잡아야 할지 고민.
+    - 우선 ControllerAdvice로 Exception 일괄처리 하는 객체에게 책임을 넘기기로 결정.

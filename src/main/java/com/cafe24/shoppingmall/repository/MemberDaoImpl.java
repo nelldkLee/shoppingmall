@@ -18,27 +18,27 @@ public class MemberDaoImpl implements MemberDao{
 	public SqlSession sqlSession;
 
 	@Override
-	public int insert(MemberVO vo) throws Exception {
+	public int insert(MemberVO vo) {
 		return sqlSession.insert("member.insert", vo);
 	}
 
 	@Override
-	public MemberVO read(Long key) throws Exception {
+	public MemberVO read(Long key) {
 		return sqlSession.selectOne("member.select", key);
 	}
 
 	@Override
-	public int update(MemberVO vo) throws Exception {
+	public int update(MemberVO vo) {
 		return sqlSession.update("member.update", vo);
 	}
 
 	@Override
-	public int delete(Long key) throws Exception {
+	public int delete(Long key) {
 		return sqlSession.delete("member.delete", key);
 	}
 
 	@Override
-	public List<MemberVO> getList(Criteria cri) throws Exception {
+	public List<MemberVO> getList(Criteria cri) {
 		return sqlSession.selectList("member.getList", cri);
 	}
 
@@ -46,5 +46,9 @@ public class MemberDaoImpl implements MemberDao{
 	public int getTotal(Criteria cri) {
 		return sqlSession.selectOne("member.getTotal", cri);
 	}
-	
+
+	@Override
+	public MemberVO findById(String id) {
+		return sqlSession.selectOne("member.findById", id);
+	}
 }

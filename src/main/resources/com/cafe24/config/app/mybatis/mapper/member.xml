@@ -19,7 +19,7 @@
 		FROM member WHERE member_no = #{no}
 	</select>
 	
-	<select id="findByEmail" resultType="membervo" parameterType="string">
+	<select id="findById" resultType="membervo" parameterType="string">
 		SELECT 
 			member_no, id, member_name, email, telephone, gender,  regdate, zipcode, normal_address, extend_address 
 		FROM member WHERE id = #{id}

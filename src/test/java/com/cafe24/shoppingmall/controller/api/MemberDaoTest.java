@@ -1,6 +1,5 @@
 package com.cafe24.shoppingmall.controller.api;
 
-import static org.junit.Assert.fail;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -67,5 +66,8 @@ public class MemberDaoTest{
 	public void testGetTotal() {
 		System.out.println(memberDao.getTotal(new Criteria()));
 	}
-
+	@Test
+	public void testFindById() {
+		System.out.println((memberDao.findById("dongkyuo")));
+	}
 }
