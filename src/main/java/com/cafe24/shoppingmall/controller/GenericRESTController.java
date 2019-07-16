@@ -18,18 +18,18 @@ import com.cafe24.shoppingmall.dto.JSONResult;
 public interface GenericRESTController<T> {
 
 	@GetMapping
-	public JSONResult list(Criteria cri) throws Exception;
+	public JSONResult list(Criteria cri);
 	
 	@GetMapping("/{key}")
-	public JSONResult view(Long key, Criteria cri) throws Exception;//@PathVariable(value="")
+	public JSONResult view(Long key);//@PathVariable(value="")
 	
 	@PostMapping
 	public JSONResult register(T vo);//@RequestBody
 	
 	@PutMapping
-	public JSONResult modify(T vo) throws Exception;//@RequestBody
+	public JSONResult modify(T vo);//@RequestBody
 	
 	@DeleteMapping("/{key}")
-	public JSONResult remove(Long key) throws Exception;
+	public JSONResult remove(Long key);
 
 }

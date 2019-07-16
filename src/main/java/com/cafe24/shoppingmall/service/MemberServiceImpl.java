@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.cafe24.shoppingmall.domain.Criteria;
 import com.cafe24.shoppingmall.domain.MemberVO;
+import com.cafe24.shoppingmall.exception.ValidCustomException;
 import com.cafe24.shoppingmall.repository.MemberDao;
+import com.cafe24.shoppingmall.util.ValidationMessage;
 
 
 @Service
@@ -48,6 +50,8 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void verifyDuplicateId(String id) {
-		memberDao.findById(id);
+		if(memberDao.findById(id).isPresent()) {
+			throw new ValidCustomException(ValidationMessage.ID_DUPLICATED, "id");
+		};
 	}
 }

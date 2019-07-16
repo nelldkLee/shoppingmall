@@ -40,6 +40,11 @@ public class GlobalExceptionHandler {
 		return JSONResult.fail(list);
 	}
 	
+	@ExceptionHandler(ValidCustomException.class)
+	public Object customValidationError(ValidCustomException ex) {
+		return JSONResult.fail(ex.getErrors());
+	}
+	
 	@ExceptionHandler(Exception.class)
 	public void handlerException(HttpServletRequest request, HttpServletResponse response, Exception e) throws Exception {
 		e.printStackTrace();

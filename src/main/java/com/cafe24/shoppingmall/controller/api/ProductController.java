@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.shoppingmall.controller.GenericRESTController;
+import com.cafe24.shoppingmall.domain.Criteria;
 import com.cafe24.shoppingmall.domain.ProductVO;
 import com.cafe24.shoppingmall.dto.JSONResult;
 
@@ -16,14 +17,12 @@ import com.cafe24.shoppingmall.dto.JSONResult;
 public class ProductController implements GenericRESTController<ProductVO> {
 
 	@Override
-	public JSONResult list() throws Exception {
-		// TODO Auto-generated method stub
+	public JSONResult list(Criteria cri) {
 		return null;
 	}
 
 	@Override
-	public JSONResult view(@PathVariable(value="key") Long no) throws Exception {
-		// TODO Auto-generated method stub
+	public JSONResult view(@PathVariable(value="key") Long no) {
 		return null;
 	}
 
@@ -34,13 +33,13 @@ public class ProductController implements GenericRESTController<ProductVO> {
 	}
 
 	@Override
-	public JSONResult modify(@Valid @RequestBody ProductVO vo) throws Exception {
+	public JSONResult modify(@Valid @RequestBody ProductVO vo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public JSONResult remove(@PathVariable(value="key")Long no) throws Exception {
+	public JSONResult remove(@PathVariable(value="key")Long no) {
 		// TODO Auto-generated method stub
 		return null;
 	}

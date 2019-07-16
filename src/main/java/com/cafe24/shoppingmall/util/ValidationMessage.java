@@ -13,4 +13,5 @@ public class ValidationMessage {
 	public static final String TELEPHONE_PATTERN = "10~11자리의 숫자만 입력가능합니다.";
 	public static final String PASSWORD_PATTERN = "영문(대소문자 구분), 숫자, 특수문자 조합, 9~12자리로 입력해주세요.";
 	
+	public static final String ID_DUPLICATED = "이미 사용중인 아이디입니다.";
 }

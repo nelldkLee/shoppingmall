@@ -28,7 +28,7 @@ public class MemberController implements GenericRESTController<MemberVO>{
 	}
 
 	@Override
-	public JSONResult view(@PathVariable(value="key")Long no, Criteria cri) {
+	public JSONResult view(@PathVariable(value="key")Long no) {
 		return JSONResult.success(memberService.view(no));
 	}
 
@@ -52,6 +52,7 @@ public class MemberController implements GenericRESTController<MemberVO>{
 
 	@GetMapping("/checkId/{id}")
 	public JSONResult verifyDuplicateId(@PathVariable String id) {
+		memberService.verifyDuplicateId(id);
 		return JSONResult.success(null);
 	}
 

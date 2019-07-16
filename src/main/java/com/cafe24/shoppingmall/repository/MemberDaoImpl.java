@@ -1,6 +1,7 @@
 package com.cafe24.shoppingmall.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.cafe24.shoppingmall.domain.Criteria;
 import com.cafe24.shoppingmall.domain.MemberVO;
-
-import lombok.Data;
 
 @Repository
 public class MemberDaoImpl implements MemberDao{
@@ -48,7 +47,7 @@ public class MemberDaoImpl implements MemberDao{
 	}
 
 	@Override
-	public MemberVO findById(String id) {
-		return sqlSession.selectOne("member.findById", id);
+	public Optional<MemberVO> findById(String id) {
+		return Optional.ofNullable(sqlSession.selectOne("member.findById", id));
 	}
 }
