@@ -13,28 +13,28 @@ import com.cafe24.shoppingmall.util.ValidationMessage;
 
 
 @Service
-public class MemberServiceImpl implements MemberService{
+public class BaseMemberService implements MemberService{
 
 	@Autowired
-	MemberDao memberDao;
+	private MemberDao memberDao;
 	
 	@Override
-	public void register(MemberVO vo) {
+	public void insert(MemberVO vo) {
 		memberDao.insert(vo);
 	}
 
 	@Override
-	public MemberVO view(Long key) {
+	public MemberVO read(Long key) {
 		return memberDao.read(key);
 	}
 
 	@Override
-	public void modify(MemberVO vo) {
+	public void update(MemberVO vo) {
 		memberDao.update(vo);
 	}
 
 	@Override
-	public void remove(Long key) {
+	public void delete(Long key) {
 		memberDao.delete(key);
 	}
 

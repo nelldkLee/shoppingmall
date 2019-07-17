@@ -71,8 +71,8 @@ public interface GenericRepository<T, K> {
 - MariaDB 유저 생성 및 권한 부여 설정
 
 #### Day2
-- DataAccess 영역 TDD 작성
-- 기본 TDD 틀에 따라 일정 정리 및 계획 수립.
+- DataAccess 영역 TDD 작성(o)
+- 기본 TDD 틀에 따라 일정 정리 및 계획 수립.(x)
 
 #### 이슈사항
 - DataAccess 영역 TDD 작성 시 insert, get, list, update, delete 등의 테스트를 진행하는데 앞서 deleteAll을 무조건 해야하는가라는 부분
@@ -82,7 +82,19 @@ public interface GenericRepository<T, K> {
     - Service Layer에서 Transaction 등의 처리와 함께 판단은 Service Layer에서 하는 걸로 정함. 
 - 아이디 중복검사를 통과한 상황이며 가입을 진행 중 다른 여러명이 같은 아이디로 중복검사를 통과하였을 시 제어를 하는 부분이 없다.
     - 아이디는 Unique하기 때문에 나중에 가입 하는 사람은 SqlException이 발생할 것으로 판단된다.
-    - SqlException을 잡아서 
+    - SqlException을 잡아서 해당 부분을 파악하고 customException으로 RuntimeException을 던지기로 결정. 
 - Repository Layer에서 sqlSession의 메소드 호출 시 SqlException이 발생한다.
     - checked Exception으로 계속 throw 해야할지 try catch로 잡아야 할지 고민.
     - 우선 ControllerAdvice로 Exception 일괄처리 하는 객체에게 책임을 넘기기로 결정.
+    - ``잘못알고 있던 부분 :`` Spring에서 checked Exception인 SqlExceptoin을 이미 try catch하여 관리하고 있었다.
+
+#### Day3
+- 회원과 상품 이외에 주문, 장바구니 등의 도메인 설계와 그에 따른 Controller 등의 인터페이스 설계
+- AbstractController의 설계로 개발 속도 향상
+
+#### 이슈사항
+- Service Layer에서의 메소드와 클래스 네이밍 컨벤션을 고민.
+    - 구현한 클래스는 Base*** 형태로 작성
+    - ![](images/서비스_네이밍_컨벤션.PNG)
+
+

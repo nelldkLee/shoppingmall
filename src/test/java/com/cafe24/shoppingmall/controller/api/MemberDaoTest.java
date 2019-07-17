@@ -37,7 +37,7 @@ public class MemberDaoTest{
 	@Test
 	public void testInsert() throws Exception {
 		System.out.println(memberDao.insert(memberVO));
-		System.out.println(memberVO.getNo());
+		System.out.println(memberVO.getMemberNo());
 	}
 
 	@Test

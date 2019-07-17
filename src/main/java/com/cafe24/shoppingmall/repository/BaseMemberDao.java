@@ -11,7 +11,7 @@ import com.cafe24.shoppingmall.domain.Criteria;
 import com.cafe24.shoppingmall.domain.MemberVO;
 
 @Repository
-public class MemberDaoImpl implements MemberDao{
+public class BaseMemberDao implements MemberDao{
 
 	@Autowired
 	public SqlSession sqlSession;

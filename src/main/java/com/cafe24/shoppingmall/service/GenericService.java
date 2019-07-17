@@ -6,13 +6,13 @@ import com.cafe24.shoppingmall.domain.Criteria;
 
 public interface GenericService<T, K> {
 
-	public void register(T vo);
+	public void insert(T vo);
 
-	public T view(K key);
+	public T read(K key);
 
-	public void modify(T vo);
+	public void update(T vo);
 
-	public void remove(K key);
+	public void delete(K key);
 
 	public List<T> getList(Criteria cri);
 	

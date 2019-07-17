@@ -28,17 +28,17 @@ public class MemberVO {
 		this.normalAddress = normalAddress;
 		this.extendAddress = extendAddress;
 	}
-	private Long no;
+	private Long memberNo;
 	@NotBlank(message = ValidationMessage.ID_BLANK)
 	private String id;
 	@NotBlank(message = ValidationMessage.MEMBER_NAME_BLANK)
 	private String memberName;
-	@Pattern(regexp = "^(?=.*\\d)(?=.*[~`!@#$%\\^&*()-])(?=.*[a-z])(?=.*[A-Z]).{9,12}$", message = ValidationMessage.PASSWORD_PATTERN)
+	@Pattern(regexp = ValidationMessage.PASSWORD_REGEX, message = ValidationMessage.PASSWORD_PATTERN)
 	private String password;
 	@NotBlank(message = ValidationMessage.EMAIL_BLANK)
     @Email(message = ValidationMessage.EAMAIL_PATTERN)
 	private String email;
-    @Pattern(regexp = "[0-9]{10,11}", message = ValidationMessage.TELEPHONE_PATTERN)
+    @Pattern(regexp = ValidationMessage.TELEPHONE_REGEX, message = ValidationMessage.TELEPHONE_PATTERN)
 	private String telephone;
     private String gender;
 	private Date regDate;

@@ -21,7 +21,7 @@ public interface GenericRESTController<T> {
 	public JSONResult list(Criteria cri);
 	
 	@GetMapping("/{key}")
-	public JSONResult view(Long key);//@PathVariable(value="")
+	public JSONResult view(Long no);//@PathVariable(value="")
 	
 	@PostMapping
 	public JSONResult register(T vo);//@RequestBody
@@ -30,6 +30,6 @@ public interface GenericRESTController<T> {
 	public JSONResult modify(T vo);//@RequestBody
 	
 	@DeleteMapping("/{key}")
-	public JSONResult remove(Long key);
+	public JSONResult remove(Long no);//@PathVariable(value="")
 
 }

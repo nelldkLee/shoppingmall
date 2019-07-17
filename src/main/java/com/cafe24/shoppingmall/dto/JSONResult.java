@@ -6,6 +6,10 @@ public class JSONResult {
 	private String message; //if fail, set
 	private Object data; // if success, set
 	
+	public static JSONResult success() {
+		return new JSONResult("success", null, null);
+	}
+	
 	public static JSONResult success(Object data) {
 		return new JSONResult("success", null, data);
 	}
@@ -13,6 +17,7 @@ public class JSONResult {
 	public static JSONResult fail(String message) {
 		return new JSONResult("fail", message, null);
 	}
+	
 	public static JSONResult fail(Object data) {
 		return new JSONResult("fail", null, data);
 	}

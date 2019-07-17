@@ -7,12 +7,13 @@ import lombok.Data;
 @Data
 public class ProductVO {
 
-	private Long no;
+	private Long productNo;
 	private String productName;
 	private String description;
 	private int price;
 	private boolean display;
 	private boolean selling;
 	private String thumnailPath;
+	private List<ProductDetailVO> productDetailList;
 	
 }

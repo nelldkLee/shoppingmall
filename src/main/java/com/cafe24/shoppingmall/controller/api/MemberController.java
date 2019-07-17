@@ -29,12 +29,12 @@ public class MemberController implements GenericRESTController<MemberVO>{
 
 	@Override
 	public JSONResult view(@PathVariable(value="key")Long no) {
-		return JSONResult.success(memberService.view(no));
+		return JSONResult.success(memberService.read(no));
 	}
 
 	@Override
 	public JSONResult register(@Valid @RequestBody MemberVO vo) {
-		memberService.register(vo);
+		memberService.insert(vo);
 		return JSONResult.success(null);
 	}
 

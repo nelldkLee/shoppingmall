@@ -4,10 +4,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.shoppingmall.controller.AbstractRESTController;
-import com.cafe24.shoppingmall.domain.ProductVO;
-import com.cafe24.shoppingmall.service.ProductService;
+import com.cafe24.shoppingmall.domain.CategoryVO;
+import com.cafe24.shoppingmall.service.CategoryService;
 
 @RestController
-@RequestMapping("/api/product")
-public class ProductController extends AbstractRESTController<ProductVO, ProductService> {
+@RequestMapping("/api/category")
+public class CategoryController extends AbstractRESTController<CategoryVO, CategoryService>{
+
 }
