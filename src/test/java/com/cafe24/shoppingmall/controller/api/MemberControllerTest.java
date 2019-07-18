@@ -19,14 +19,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.cafe24.shoppingmall.config.AppConfig;
+import com.cafe24.shoppingmall.config.TestAppConfig;
 import com.cafe24.shoppingmall.config.TestWebConfig;
 import com.cafe24.shoppingmall.domain.MemberVO;
 import com.cafe24.shoppingmall.util.ValidationMessage;
 import com.google.gson.Gson;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfig.class, TestWebConfig.class })
+@ContextConfiguration(classes = {TestAppConfig.class, TestWebConfig.class })
 @WebAppConfiguration
 public class MemberControllerTest {
 	private MockMvc mockMvc;

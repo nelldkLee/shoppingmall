@@ -1,9 +1,9 @@
-package com.cafe24.shoppingmall.repository;
+package com.cafe24.shoppingmall.mapper;
 
 import java.util.Optional;
 
 import com.cafe24.shoppingmall.domain.MemberVO;
 
-public interface MemberDao extends GenericRepository<MemberVO, Long>{
+public interface MemberMapper extends GenericMapper<MemberVO, Long>{
 	public Optional<MemberVO> findById(String id);
 }

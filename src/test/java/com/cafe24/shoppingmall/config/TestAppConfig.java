@@ -1,5 +1,6 @@
 package com.cafe24.shoppingmall.config;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -10,7 +11,7 @@ import com.cafe24.config.app.MybatisConfig;
 
 @Configuration
 @EnableAspectJAutoProxy
-@ComponentScan({"com.cafe24.shoppingmall.service", "com.cafe24.shoppingmall.repository", "com.cafe24.shoppingmall.aspect"})
+@MapperScan({"com.cafe24.shoppingmall.mapper"})
 @Import({DBConfig.class, MybatisConfig.class})
-public class AppConfig {
+public class TestAppConfig {
 }

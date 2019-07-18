@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cafe24.shoppingmall.domain.Criteria;
 import com.cafe24.shoppingmall.domain.MemberVO;
 import com.cafe24.shoppingmall.exception.ValidCustomException;
-import com.cafe24.shoppingmall.repository.MemberDao;
+import com.cafe24.shoppingmall.mapper.MemberMapper;
 import com.cafe24.shoppingmall.util.ValidationMessage;
 
 
@@ -16,41 +16,41 @@ import com.cafe24.shoppingmall.util.ValidationMessage;
 public class BaseMemberService implements MemberService{
 
 	@Autowired
-	private MemberDao memberDao;
+	private MemberMapper mapper;
 	
 	@Override
 	public void insert(MemberVO vo) {
-		memberDao.insert(vo);
+		mapper.insert(vo);
 	}
 
 	@Override
 	public MemberVO read(Long key) {
-		return memberDao.read(key);
+		return mapper.read(key);
 	}
 
 	@Override
 	public void update(MemberVO vo) {
-		memberDao.update(vo);
+		mapper.update(vo);
 	}
 
 	@Override
 	public void delete(Long key) {
-		memberDao.delete(key);
+		mapper.delete(key);
 	}
 
 	@Override
 	public List<MemberVO> getList(Criteria cri) {
-		return memberDao.getList(cri);
+		return mapper.getList(cri);
 	}
 
 	@Override
 	public int getTotal(Criteria cri) {
-		return memberDao.getTotal(cri);
+		return mapper.getTotal(cri);
 	}
 
 	@Override
 	public void verifyDuplicateId(String id) {
-		if(memberDao.findById(id).isPresent()) {
+		if(mapper.findById(id).isPresent()) {
 			throw new ValidCustomException(ValidationMessage.ID_DUPLICATED, "id");
 		};
 	}

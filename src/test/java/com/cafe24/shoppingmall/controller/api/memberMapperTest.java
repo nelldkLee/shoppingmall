@@ -11,20 +11,20 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.cafe24.shoppingmall.config.AppConfig;
+import com.cafe24.shoppingmall.config.TestAppConfig;
 import com.cafe24.shoppingmall.config.TestWebConfig;
 import com.cafe24.shoppingmall.domain.Criteria;
 import com.cafe24.shoppingmall.domain.MemberVO;
-import com.cafe24.shoppingmall.repository.MemberDao;
+import com.cafe24.shoppingmall.mapper.MemberMapper;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppConfig.class, TestWebConfig.class })
+@ContextConfiguration(classes = {TestAppConfig.class, TestWebConfig.class })
 @WebAppConfiguration
-public class MemberDaoTest{
+public class memberMapperTest{
 
 	@Autowired
-	private MemberDao memberDao;
+	private MemberMapper memberMapper;
 	
 	private MemberVO memberVO;
 	
@@ -36,38 +36,38 @@ public class MemberDaoTest{
 	
 	@Test
 	public void testInsert() throws Exception {
-		System.out.println(memberDao.insert(memberVO));
+		System.out.println(memberMapper.insert(memberVO));
 		System.out.println(memberVO.getMemberNo());
 	}
 
 	@Test
 	public void testRead() throws Exception {
-		MemberVO memberVO2 = memberDao.read(1L);
+		MemberVO memberVO2 = memberMapper.read(1L);
 		assertThat(memberVO.getId(),is(memberVO2.getId()));
 	}
 
 	@Test
 	public void testUpdate() throws Exception {
 		memberVO.setTelephone("03073437248");
-		memberDao.update(memberVO);
+		memberMapper.update(memberVO);
 	}
 
 	@Test
 	public void testDelete() throws Exception {
-		memberDao.delete(10L);
+		memberMapper.delete(10L);
 	}
 
 	@Test
 	public void testGetList() throws Exception {
-		System.out.println(memberDao.getList(new Criteria()));
+		System.out.println(memberMapper.getList(new Criteria()));
 	}
 
 	@Test
 	public void testGetTotal() {
-		System.out.println(memberDao.getTotal(new Criteria()));
+		System.out.println(memberMapper.getTotal(new Criteria()));
 	}
 	@Test
 	public void testFindById() {
-		System.out.println((memberDao.findById("dongkyuo")));
+		System.out.println((memberMapper.findById("dongkyuo")));
 	}
 }

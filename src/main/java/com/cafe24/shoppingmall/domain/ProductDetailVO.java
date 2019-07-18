@@ -9,5 +9,4 @@ public class ProductDetailVO {
 	
 	private Long productDetailNo;
 	private List<OptionGroupVO> optionGroupList;
-	
 }

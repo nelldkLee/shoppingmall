@@ -1,10 +1,10 @@
-package com.cafe24.shoppingmall.repository;
+package com.cafe24.shoppingmall.mapper;
 
 import java.util.List;
 
 import com.cafe24.shoppingmall.domain.Criteria;
 
-public interface GenericRepository<T, K> {
+public interface GenericMapper<T, K> {
 
 	public int insert(T vo);
 

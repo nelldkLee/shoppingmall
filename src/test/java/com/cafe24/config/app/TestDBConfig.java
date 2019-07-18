@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:jdbc_test.properties")
-public class DBConfig {
+public class TestDBConfig {
 	
 	@Autowired
 	private Environment env;

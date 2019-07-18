@@ -6,8 +6,4 @@
 		<typeAlias alias="categoryvo" type="com.cafe24.shoppingmall.domain.CategoryVO"/>
 		<typeAlias alias="criteria" type="com.cafe24.shoppingmall.domain.Criteria"/>
     </typeAliases>	
-	<mappers>
-		<mapper resource="com/cafe24/config/app/mybatis/mapper/member.xml" />
-		<mapper resource="com/cafe24/config/app/mybatis/mapper/category.xml" />
-	</mappers>
 </configuration>

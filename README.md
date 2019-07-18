@@ -97,4 +97,17 @@ public interface GenericRepository<T, K> {
     - 구현한 클래스는 Base*** 형태로 작성
     - ![](images/서비스_네이밍_컨벤션.PNG)
 
+#### Day4
+- Dao와 SqlSession이 사용되던 스펙에서 Mapper 인터페이스 스펙으로 변경
+- 상품 및 주문 등의 도메인과 그에 따른 Business Layer(Service)의 설계 
+#### 이슈사항
+- Mapper 인터페이스로 변경흐름
+    - @MapperScan 어노테이션을 통해 mapper 인터페이스와 xml을 연동한다.
+    - src/main/resources 소스폴더 아래에 위치한 폴더 구조를 Java package 구조와 같게하면 Java 파일이 컴파일 되며 package를 폴더화하며 같은 구조에 데이터가 묶이게 된다. 그 때 @MapperScan은 xml에 선언된 mapper의 namespace에 명시된 이름과 해당 인터페이스를 바인딩하여 빈으로 등록한다.
+- ```MemberMapper.xml, MemberMapper 인터페이스, xml 내부에 namespace 이름 동일하게 하기```
+- 도메인을 기반으로 Service Layer를 설계하는 부분에서 어려움을 느낌
+    - 상품과 상품디테일이 각각 VO로 나뉘어 있으며 상품에 List형태로 상품 디테일이 존재
+    - 이러한 경우 Service는 상품만 있으면 되려나? 상품디테일을 수정을 한다하면 상품디테일은 어떤 Service와 관계를 맺으면 될지 고민 중... 
+
+
 

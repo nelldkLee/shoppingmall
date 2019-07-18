@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="member">
+<mapper namespace="com.cafe24.shoppingmall.mapper.MemberMapper">
 	
 	<insert id="insert" parameterType="membervo">
 		INSERT INTO member(id, member_name, password, email, telephone, gender, zipcode, normal_address, extend_address) 
@@ -13,7 +13,7 @@
 		</selectKey> 
 	</insert>
 	
-	<select id="select" resultType="membervo" parameterType="long">
+	<select id="read" resultType="membervo" parameterType="long">
 		SELECT 
 			member_no, id, member_name, email, telephone, gender, regdate, zipcode, normal_address, extend_address 
 		FROM member WHERE member_no = #{no}

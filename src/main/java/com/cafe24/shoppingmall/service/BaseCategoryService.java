@@ -7,42 +7,42 @@ import org.springframework.stereotype.Service;
 
 import com.cafe24.shoppingmall.domain.CategoryVO;
 import com.cafe24.shoppingmall.domain.Criteria;
-import com.cafe24.shoppingmall.repository.CategoryDao;
+import com.cafe24.shoppingmall.mapper.CategoryMapper;
 
 @Service
 public class BaseCategoryService implements CategoryService{
 
 	@Autowired
-	private CategoryDao categoryDao;
+	private CategoryMapper mapper;
 	
 	@Override
 	public void insert(CategoryVO vo) {
-		categoryDao.insert(vo);		
+		mapper.insert(vo);		
 	}
 
 	@Override
 	public CategoryVO read(Long key) {
-		return categoryDao.read(key);
+		return mapper.read(key);
 	}
 
 	@Override
 	public void update(CategoryVO vo) {
-		categoryDao.update(vo);
+		mapper.update(vo);
 	}
 
 	@Override
 	public void delete(Long key) {
-		categoryDao.delete(key);		
+		mapper.delete(key);		
 	}
 
 	@Override
 	public List<CategoryVO> getList(Criteria cri) {
-		return categoryDao.getList(cri);
+		return mapper.getList(cri);
 	}
 
 	@Override
 	public int getTotal(Criteria cri) {
-		return categoryDao.getTotal(cri);
+		return mapper.getTotal(cri);
 	}
 
 }

@@ -11,12 +11,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.cafe24.shoppingmall.config.AppConfig;
+import com.cafe24.shoppingmall.config.TestAppConfig;
 import com.cafe24.shoppingmall.config.WebConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DBConfig.class})
-@WebAppConfiguration
 public class DataSourceTest {
 
 	@Autowired
