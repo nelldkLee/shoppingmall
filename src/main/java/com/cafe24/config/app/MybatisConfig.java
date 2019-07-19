@@ -20,7 +20,7 @@ public class MybatisConfig {
 	public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource, ApplicationContext applicationContext) throws Exception {
 		SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
 		sessionFactoryBean.setDataSource(dataSource);
-		sessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:com/cafe24/shoppingmall/mapper/configuration.xml") );
+		sessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:com/cafe24/shoppingmall/configuration.xml") );
 		return sessionFactoryBean.getObject();
 	}
 	

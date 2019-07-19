@@ -4,6 +4,8 @@
 	<typeAliases>
 		<typeAlias alias="membervo" type="com.cafe24.shoppingmall.domain.MemberVO"/>
 		<typeAlias alias="categoryvo" type="com.cafe24.shoppingmall.domain.CategoryVO"/>
+		<typeAlias alias="productvo" type="com.cafe24.shoppingmall.domain.ProductVO"/>
+		<typeAlias alias="basketvo" type="com.cafe24.shoppingmall.domain.BasketVO"/>
 		<typeAlias alias="criteria" type="com.cafe24.shoppingmall.domain.Criteria"/>
     </typeAliases>	
 </configuration>

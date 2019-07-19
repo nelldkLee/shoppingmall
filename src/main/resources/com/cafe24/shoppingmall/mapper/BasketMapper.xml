@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cafe24.shoppingmall.mapper.BasketMapper">
+	
+	<insert id="insert" parameterType="basketvo">
+		INSERT INTO basket(member_no, product_detail_no, count) 
+			VALUES(#{memberNo}, #{productDetailNo}, #{count})
+	</insert>
+	
+	<!-- 진행중 
+		 필요한 정보 옵션,상품이름, 가격
+	-->
+	<select id="read" resultType="basketvo" parameterType="long">
+		SELECT 
+			basket_no basketNo, baske basketName   
+		FROM basket WHERE basket_no = #{no}
+	</select>
+	
+	<update id="update" parameterType="basketvo">
+		UPDATE basket 
+			SET count = #{count}  
+		WHERE basket_no = #{basketNo}
+	</update>
+	
+	<delete id="delete" parameterType="long">
+		DELETE from basket WHERE basket_no = #{basketNo} 
+	</delete>
+	
+	<!-- 진행중 -->
+	<select id="getList" parameterType="criteria" resultType="basketvo">
+		SELECT basket_no basketNo, basket_name basketName, upper_basket_no upperbasketNo   
+			FROM basket  
+		ORDER BY member_no DESC LIMIT #{limitStart}, #{perPageSize}
+	</select>
+	
+	<select id="getTotal" resultType="int">
+		SELECT count(*) from basket
+	</select>
+	
+</mapper>

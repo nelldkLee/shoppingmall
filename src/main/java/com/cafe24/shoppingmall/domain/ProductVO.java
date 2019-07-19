@@ -8,6 +8,7 @@ import lombok.Data;
 public class ProductVO {
 
 	private Long productNo;
+	private Long categoryNo;
 	private String productName;
 	private String description;
 	private int price;

@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 public class OptionGroupVO {
 	private Long optionGroupNo;
-	private int price;
 	private int stock;
 	private List<OptionVO> optionList;
 }
