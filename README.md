@@ -116,3 +116,28 @@ public interface GenericRepository<T, K> {
 #### 이슈사항
 - Join해서 가져오는 데이터의 정도를 고민
     - 장바구니 같은 경우 상품 가격, 상품 이름, 옵션 데이터가 추가로 보여져야 하므로 그에 해당하는 정보를 가져오기로 결정
+
+### 3주차
+- 일정 테이블 수정 및 md파일로 변경
+
+번호 |  API  | URL |  METHOD | 일정 | 예상시간 | 진행시간 | 완료
+------- | ------- | ------- | ------- | ------- | ------- | ------- | -------
+1 | TDD 환경구축 ||| ~7.12 |  |  | O
+2 | API 설계 | RestController URL 설계 |  | 7.15 ~ 7.16 |  |  | O
+3 | API 설계 | Controller,Service 인터페이스 설계 |  | 7.17~7.18 |  |  | O
+4 | API 설계 | dao, mapper 설계 변경 |  | 7.18 |  |  | O
+5 | 회원정보 등록 | /api/member | POST | 7.19 |  |  | O
+6 | 회원정보 읽기 | /api/member | GET | 7.19 |  |  | O
+7 | 회원정보 수정 | /api/member | PUT | 7.19 |  |  | O
+8 | 회원정보 삭제 | /api/member/{id} | DELETE | 7.19 |  |  | O
+9 | 회원목록 읽기 | /api/category | GET | 7.19 |  |  | O
+10 | 카테고리 등록 | /api/category | POST | 7.19 |  |  | O
+11 | 카테고리 읽기 | /api/category | GET | 7.19 |  |  | O
+12 | 카테고리 수정 | /api/category | PUT | 7.19 |  |  | O
+13 | 카테고리 삭제 | /api/category/{id} | DELETE | 7.19 |  |  | O
+14 | 카테고리 읽기 | /api/basket | GET | 7.19 |  |  | O
+15 | 장바구니 등록 | /api/basket | POST | 7.19 |  |  | O
+16 | 장바구니 읽기 | /api/basket | GET | 7.19 |  |  | O
+17 | 장바구니 수정 | /api/basket | PUT | 7.19 |  |  | O
+18 | 장바구니 삭제 | /api/basket/{id} | DELETE | 7.19 |  |  | O
+19 | 장바구니 읽기 | /api/basket | GET | 7.19 |  |  | O

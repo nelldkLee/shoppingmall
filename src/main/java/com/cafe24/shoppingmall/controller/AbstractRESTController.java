@@ -13,7 +13,7 @@ import com.cafe24.shoppingmall.service.GenericService;
 public abstract class AbstractRESTController<T, S extends GenericService> implements GenericRESTController<T>{
 	
 	@Autowired
-	private S service;
+	protected S service;
 
 	@Override
 	public JSONResult list(Criteria cri) {
