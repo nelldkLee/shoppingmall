@@ -4,8 +4,16 @@
 <mapper namespace="com.cafe24.shoppingmall.mapper.CategoryMapper">
 
 	<insert id="insert" parameterType="categoryvo">
-		INSERT INTO category(category_name) 
-			VALUES(#{categoryName})
+		INSERT INTO category(category_name
+							<if test="upperCategoryNo > 0">
+							,upper_category_no 
+							</if>   
+							) 
+			VALUES(#{categoryName}
+				<if test="upperCategoryNo > 0">
+				, #{upperCategoryNo} 
+				</if>   
+				  )
 	</insert>
 	
 	<select id="read" resultType="categoryvo" parameterType="long">

@@ -4,18 +4,27 @@
 <mapper namespace="com.cafe24.shoppingmall.mapper.ProductMapper">
 	
 	<insert id="insert" parameterType="productvo">
-		INSERT INTO product(category_no, product_name, description, price, display, selling, regdate) 
-			VALUES(#{categoryNo}, #{productName}, #{description}, #{price}, #{display}, #{selling}, now())
+		INSERT INTO product(product_name, description, price, display, selling, regdate) 
+			VALUES(#{productName}, #{description}, #{price}, #{display}, #{selling}, now())
 			
-		<selectKey keyProperty="category_no" resultType="long" order="AFTER">
+		<selectKey keyProperty="productNo" resultType="long" order="AFTER">
 			select
 			last_insert_id()
 		</selectKey> 
 	</insert>
 	
+	<insert id="insertProductDetail" parameterType="productvo">
+		INSERT INTO product_detail(product_no) 
+			VALUES(#{productNo})
+		<selectKey keyProperty="productDetail.productDetailNo" resultType="long" order="AFTER">
+			select
+			last_insert_id()
+		</selectKey>
+	</insert>
+	
 	<select id="read" resultType="productvo" parameterType="long">
 		SELECT 
-			category_no categoryNo, product_name productName, description, price, display, selling, thumnail_path, regdate 
+			product_no productNo, product_name productName, description, price, display, selling, regdate 
 		FROM product WHERE product_no = #{no}
 	</select>
 	

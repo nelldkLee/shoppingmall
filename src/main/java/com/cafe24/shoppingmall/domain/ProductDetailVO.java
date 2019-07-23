@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class ProductDetailVO {
-	
+	private Long productNo;
 	private Long productDetailNo;
 	private List<OptionGroupVO> optionGroupList;
 }

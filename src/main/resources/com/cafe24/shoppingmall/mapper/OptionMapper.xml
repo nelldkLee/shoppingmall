@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cafe24.shoppingmall.mapper.OptionMapper">
+	
+	<insert id="insert" parameterType="optionvo">
+		INSERT INTO option(option_group_no, option_name, option_value) 
+			VALUES(#{optionGroupNo}, #{optionName}, #{optionValue})
+	</insert>
+	
+	<insert id="insertOptionGroup" parameterType="optiongroupvo"> 
+		INSERT INTO option_group(product_detail_no, stock) 
+			VALUES 
+			(#{productDetailNo}, #{stock})
+		<selectKey keyProperty="optionGroupNo" resultType="long" order="AFTER">
+			select
+			last_insert_id()
+		</selectKey> 	
+	</insert>
+	  
+	<insert id="insertOptionList" parameterType="optiongroupvo"> 
+		INSERT INTO option(option_group_no, option_name, option_value) 
+			VALUES 
+			<foreach item="item" collection="optionList" separator=",">
+			(#{optionGroupNo}, #{item.optionName}, #{item.optionValue})
+			</foreach>
+	</insert>
+	
+	
+	<!-- 진행중 
+		 필요한 정보 옵션,상품이름, 가격
+	-->
+	<select id="read" resultType="optionvo" parameterType="long">
+		SELECT 
+			option_no optionNo, baske optionName   
+		FROM option WHERE option_no = #{no}
+	</select>
+	
+	<update id="update" parameterType="optionvo">
+		UPDATE option 
+			SET count = #{count}  
+		WHERE option_no = #{optionNo}
+	</update>
+	
+	<delete id="delete" parameterType="long">
+		DELETE from option WHERE option_no = #{optionNo} 
+	</delete>
+	
+	<!-- 진행중 -->
+	<select id="getList" parameterType="criteria" resultType="optionvo">
+		SELECT option_no optionNo, option_name optionName, upper_option_no upperoptionNo   
+			FROM option  
+		ORDER BY member_no DESC LIMIT #{limitStart}, #{perPageSize}
+	</select>
+	
+	<select id="getTotal" resultType="int">
+		SELECT count(*) from option
+	</select>
+	
+</mapper>
