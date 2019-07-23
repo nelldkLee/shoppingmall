@@ -141,3 +141,4 @@ public interface GenericRepository<T, K> {
 17 | 장바구니 수정 | /api/basket | PUT | 7.19 |  |  | O
 18 | 장바구니 삭제 | /api/basket/{id} | DELETE | 7.19 |  |  | O
 19 | 장바구니 읽기 | /api/basket | GET | 7.19 |  |  | O
+#### 추가 일정 WIKI로 이동
