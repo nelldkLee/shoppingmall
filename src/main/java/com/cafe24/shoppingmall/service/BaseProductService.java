@@ -13,7 +13,6 @@ import com.cafe24.shoppingmall.mapper.OptionMapper;
 import com.cafe24.shoppingmall.mapper.ProductMapper;
 
 @Service
-@Transactional
 public class BaseProductService implements ProductService{
 
 	@Autowired
@@ -22,14 +21,17 @@ public class BaseProductService implements ProductService{
 	private OptionService optionService;
 	
 	@Override
+	@Transactional
 	public void insert(ProductVO vo) {
 		mapper.insert(vo);
-		mapper.insertProductDetail(vo);
-		ProductDetailVO productDetailVO = vo.getProductDetail();
-		productDetailVO.getOptionGroupList().forEach((optionGroupVO)->{
-			optionGroupVO.setProductDetailNo(productDetailVO.getProductDetailNo());
-		});
-		optionService.insertOptionGroupList(productDetailVO);
+		System.out.println("테스트");
+		List<ProductDetailVO> list = vo.getProductDetailList();
+		list.forEach((productDetailVO)-> productDetailVO.setProductNo(vo.getProductNo()));
+		list.forEach((productDetailVO)-> mapper.insertProductDetail(productDetailVO));
+
+		if(vo.isOptionActive()) {
+			optionService.insertOptionList(vo);	
+		}
 	}
 
 	@Override

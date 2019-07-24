@@ -6,6 +6,8 @@ import lombok.Data;
 public class BasketVO {
 	private Long basketNo;
 	private Long memberNo;
+	private String guestSessionId;
 	private Long productDetailNo;
 	private int count;
+	private ProductVO product;
 }

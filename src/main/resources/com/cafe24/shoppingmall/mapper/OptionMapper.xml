@@ -3,26 +3,18 @@
 
 <mapper namespace="com.cafe24.shoppingmall.mapper.OptionMapper">
 	
+	<!-- 완료 -->
 	<insert id="insert" parameterType="optionvo">
-		INSERT INTO option(option_group_no, option_name, option_value) 
-			VALUES(#{optionGroupNo}, #{optionName}, #{optionValue})
+		INSERT INTO option(product_detail_no, option_name, option_value) 
+			VALUES(#{productDetailNo}, #{optionName}, #{optionValue})
 	</insert>
 	
-	<insert id="insertOptionGroup" parameterType="optiongroupvo"> 
-		INSERT INTO option_group(product_detail_no, stock) 
-			VALUES 
-			(#{productDetailNo}, #{stock})
-		<selectKey keyProperty="optionGroupNo" resultType="long" order="AFTER">
-			select
-			last_insert_id()
-		</selectKey> 	
-	</insert>
-	  
-	<insert id="insertOptionList" parameterType="optiongroupvo"> 
-		INSERT INTO option(option_group_no, option_name, option_value) 
+	<!-- 완료 -->  
+	<insert id="insertOptionList" parameterType="productdetailvo"> 
+		INSERT INTO option(product_detail_no, option_name, option_value) 
 			VALUES 
 			<foreach item="item" collection="optionList" separator=",">
-			(#{optionGroupNo}, #{item.optionName}, #{item.optionValue})
+			(#{productDetailNo}, #{item.optionName}, #{item.optionValue})
 			</foreach>
 	</insert>
 	

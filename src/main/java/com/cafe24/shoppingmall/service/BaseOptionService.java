@@ -4,11 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.cafe24.shoppingmall.domain.Criteria;
 import com.cafe24.shoppingmall.domain.OptionVO;
-import com.cafe24.shoppingmall.domain.ProductDetailVO;
+import com.cafe24.shoppingmall.domain.ProductVO;
 import com.cafe24.shoppingmall.mapper.OptionMapper;
 
 @Service
@@ -48,10 +47,8 @@ public class BaseOptionService implements OptionService{
 	}
 
 	@Override
-	@Transactional
-	public void insertOptionGroupList(ProductDetailVO vo) {
-		vo.getOptionGroupList().forEach((optionGroup)->mapper.insertOptionGroup(optionGroup));
-		vo.getOptionGroupList().forEach((optionGroup)->mapper.insertOptionList(optionGroup));
+	public void insertOptionList(ProductVO vo) {
+		vo.getProductDetailList().forEach((productDetail)-> mapper.insertOptionList(productDetail));
 	}
 
 }

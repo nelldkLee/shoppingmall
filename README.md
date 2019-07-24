@@ -194,3 +194,10 @@ public interface GenericRepository<T, K> {
   - ![](images/카테고리_다대다.PNG)
 - 장바구니 부분 비회원 관련 구조 및 정책을 제대로 잡지 않은 문제로 ERD 수정이 필요함
     - 내일 진행 예정
+
+#### Day3
+- ERD 구조변경
+- ![](images/변경ERD.PNG)
+
+#### 이슈사항
+- ERD의 구조를 잘못잡음으로 인해 발생되는 수 많은 수정 작업...

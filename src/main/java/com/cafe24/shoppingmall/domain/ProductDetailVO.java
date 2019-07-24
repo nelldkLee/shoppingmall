@@ -8,5 +8,6 @@ import lombok.Data;
 public class ProductDetailVO {
 	private Long productNo;
 	private Long productDetailNo;
-	private List<OptionGroupVO> optionGroupList;
+	private int stock;
+	private List<OptionVO> optionList;
 }

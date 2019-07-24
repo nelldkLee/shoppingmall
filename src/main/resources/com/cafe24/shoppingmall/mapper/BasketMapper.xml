@@ -3,13 +3,31 @@
 
 <mapper namespace="com.cafe24.shoppingmall.mapper.BasketMapper">
 	
+	
 	<insert id="insert" parameterType="basketvo">
-		INSERT INTO basket(member_no, product_detail_no, count) 
-			VALUES(#{memberNo}, #{productDetailNo}, #{count})
+	INSERT INTO basket(
+					product_detail_no,
+					count
+					<if test="memberNo > 0">
+						,member_no
+					</if>
+					<if test="guestSessionId != null">
+						,guest_session_id
+					</if>
+					)
+					VALUES(#{productDetailNo},
+					#{count}
+					<if test="memberNo > 0">
+						,#{memberNo}
+					</if>
+					<if test="guestSessionId != null">
+						,#{guestSessionId}
+					</if>
+					)
 	</insert>
 	
 	<!-- 진행중 
-		 필요한 정보 옵션,상품이름, 가격
+		 장바구니 한개만 읽는 경우가 있으려나? 한개만 읽는건 상품을 보고 싶은거지
 	-->
 	<select id="read" resultType="basketvo" parameterType="long">
 		SELECT 
@@ -27,11 +45,13 @@
 		DELETE from basket WHERE basket_no = #{basketNo} 
 	</delete>
 	
-	<!-- 진행중 -->
+	<!-- 진행중 
+	필요한 정보 옵션, 상품이름, 가격, 수량
+	-->
 	<select id="getList" parameterType="criteria" resultType="basketvo">
 		SELECT basket_no basketNo, basket_name basketName, upper_basket_no upperbasketNo   
 			FROM basket  
-		ORDER BY member_no DESC LIMIT #{limitStart}, #{perPageSize}
+		ORDER BY member_no
 	</select>
 	
 	<select id="getTotal" resultType="int">

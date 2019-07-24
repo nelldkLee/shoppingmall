@@ -6,7 +6,7 @@ import lombok.Data;
 public class OptionVO {
 	
 	private Long optionNo;
-	private Long optionGroupNo;
+	private Long productDetailNo;
 	private String optionName;
 	private String optionValue;
 

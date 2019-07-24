@@ -8,7 +8,6 @@
 		<typeAlias alias="productdetailvo" type="com.cafe24.shoppingmall.domain.ProductDetailVO"/>
 		<typeAlias alias="basketvo" type="com.cafe24.shoppingmall.domain.BasketVO"/>
 		<typeAlias alias="optionvo" type="com.cafe24.shoppingmall.domain.OptionVO"/>
-		<typeAlias alias="optiongroupvo" type="com.cafe24.shoppingmall.domain.OptionGroupVO"/>
 		<typeAlias alias="criteria" type="com.cafe24.shoppingmall.domain.Criteria"/>
     </typeAliases>	
 </configuration>
