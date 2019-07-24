@@ -118,27 +118,79 @@ public interface GenericRepository<T, K> {
     - 장바구니 같은 경우 상품 가격, 상품 이름, 옵션 데이터가 추가로 보여져야 하므로 그에 해당하는 정보를 가져오기로 결정
 
 ### 3주차
+#### Day1
 - 일정 테이블 수정 및 md파일로 변경
 
-번호 |  API  | URL |  METHOD | 일정 | 예상시간 | 진행시간 | 완료
-------- | ------- | ------- | ------- | ------- | ------- | ------- | -------
-1 | TDD 환경구축 ||| ~7.12 |  |  | O
-2 | API 설계 | RestController URL 설계 |  | 7.15 ~ 7.16 |  |  | O
-3 | API 설계 | Controller,Service 인터페이스 설계 |  | 7.17~7.18 |  |  | O
-4 | API 설계 | dao, mapper 설계 변경 |  | 7.18 |  |  | O
-5 | 회원정보 등록 | /api/member | POST | 7.19 |  |  | O
-6 | 회원정보 읽기 | /api/member | GET | 7.19 |  |  | O
-7 | 회원정보 수정 | /api/member | PUT | 7.19 |  |  | O
-8 | 회원정보 삭제 | /api/member/{id} | DELETE | 7.19 |  |  | O
-9 | 회원목록 읽기 | /api/category | GET | 7.19 |  |  | O
-10 | 카테고리 등록 | /api/category | POST | 7.19 |  |  | O
-11 | 카테고리 읽기 | /api/category | GET | 7.19 |  |  | O
-12 | 카테고리 수정 | /api/category | PUT | 7.19 |  |  | O
-13 | 카테고리 삭제 | /api/category/{id} | DELETE | 7.19 |  |  | O
-14 | 카테고리 읽기 | /api/basket | GET | 7.19 |  |  | O
-15 | 장바구니 등록 | /api/basket | POST | 7.19 |  |  | O
-16 | 장바구니 읽기 | /api/basket | GET | 7.19 |  |  | O
-17 | 장바구니 수정 | /api/basket | PUT | 7.19 |  |  | O
-18 | 장바구니 삭제 | /api/basket/{id} | DELETE | 7.19 |  |  | O
-19 | 장바구니 읽기 | /api/basket | GET | 7.19 |  |  | O
 #### 추가 일정 WIKI로 이동
+
+#### Day2
+- Option 및 OptionGroup 상품(Product) 등록 시 한번에 등록 가능하게 수정
+```java
+{
+  "description": "여름신상긴바지",
+  "display": true,
+  "price": 15000,
+  "productDetail": {
+    "optionGroupList": [
+      {
+        "optionList": [
+          {
+            "optionName": "색상",
+            "optionValue": "노랑"
+          },{
+            "optionName": "사이즈",
+            "optionValue": "95"
+          }
+        ],
+        "stock": 10
+      },{
+        "optionList": [
+          {
+            "optionName": "색상",
+            "optionValue": "빨강"
+          },{
+            "optionName": "사이즈",
+            "optionValue": "100"
+          }
+        ],
+        "stock": 100
+      },{
+        "optionList": [
+          {
+            "optionName": "색상",
+            "optionValue": "노랑"
+          },{
+            "optionName": "사이즈",
+            "optionValue": "90"
+          }
+        ],
+        "stock": 23
+      }
+    ],
+    "productDetailNo": 0
+  },
+  "productName": "여름긴바지",
+  "selling": true
+}
+```
+- 해당 영역 Transaction 처리. 테스트 진행 예정
+
+
+#### 이슈사항
+- Option 그룹과 Option의 관계와 Category 등의 다대다 관계 및 자기 참조 부분
+  - ![](images/옵션_옵션그룹_관계.PNG)
+    - option 그룹을 먼저 insert하고 해당 option_group_no를 selectKey로 가지고와야함
+    - mybatis에 foreach태그를 통해 해당 option_group_no를 다중 insert 과정에서 캐치하려 하였으나 실패
+    - 방안으로 DB를 두번 호출함. 아래와 같이 우선 optionGroup을 생성하고 selectKey로 가지고 온 후 해당 그룹에 해당하는 Option들을 insert 시킴
+    ```java
+    @Override
+        @Transactional
+        public void insertOptionGroupList(ProductDetailVO vo) {
+            vo.getOptionGroupList().forEach((optionGroup)->mapper.insertOptionGroup(optionGroup));
+            vo.getOptionGroupList().forEach((optionGroup)->mapper.insertOptionList(optionGroup));
+        }
+    ```
+    - 상품(Product)와 카테고리(category)를 일대다가 아닌 다대다 관계라 아래와 같이 수정
+  - ![](images/카테고리_다대다.PNG)
+- 장바구니 부분 비회원 관련 구조 및 정책을 제대로 잡지 않은 문제로 ERD 수정이 필요함
+    - 내일 진행 예정
