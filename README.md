@@ -254,7 +254,10 @@ public interface GenericRepository<T, K> {
 
 
 #### Day4
-- 
+- 장바구니 추가 프로세스 정리
+- 장바구니 추가 시 장바구니 기존 상품 여부에 따라 update 및 insert
+- 회원 및 비회원 둘다 가능
+
 
 #### 이슈사항
 1. 상품 리스트를 가져올 때 ADMIN과 일반 USER 사이에 필요한 컬럼의 차이 발생
