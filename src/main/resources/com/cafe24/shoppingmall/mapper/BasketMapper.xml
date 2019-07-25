@@ -32,13 +32,16 @@
 	<select id="read" resultType="basketvo" parameterType="long">
 		SELECT 
 			basket_no basketNo, baske basketName   
-		FROM basket WHERE basket_no = #{no}
+		FROM basket WHERE product_detail_no = #{productDetailNo} AND 
 	</select>
+	
+	
+	
 	
 	<update id="update" parameterType="basketvo">
 		UPDATE basket 
 			SET count = #{count}  
-		WHERE basket_no = #{basketNo}
+		WHERE product_detail_no = #{productDetailNo}
 	</update>
 	
 	<delete id="delete" parameterType="long">
@@ -47,12 +50,40 @@
 	
 	<!-- 진행중 
 	필요한 정보 옵션, 상품이름, 가격, 수량
+	insert 하기전에 기존에 장바구니에 담겨져있는지 확인 할 때도 사용된다.
 	-->
-	<select id="getList" parameterType="criteria" resultType="basketvo">
-		SELECT basket_no basketNo, basket_name basketName, upper_basket_no upperbasketNo   
-			FROM basket  
-		ORDER BY member_no
-	</select>
+	
+	<resultMap type="com.cafe24.shoppingmall.domain.BasketVO" id="basketMap">
+		<id property="productDetailNo" column="product_detail_no" />
+		<result property="basketNo" column="basket_no" />
+		<result property="count" column="count" />
+		<collection property="productDetailVo" resultMap="productDetailMap" />
+	</resultMap>
+	<resultMap type="com.cafe24.shoppingmall.domain.ProductDetailVO" id="productDetailMap">
+		<id property="productNo" column="product_no" />
+		<collection property="optionList" resultMap="optionMap" />
+	</resultMap>
+	
+	<resultMap type="com.cafe24.shoppingmall.domain.OptionVO" id="optionMap">
+		<result property="optionNo" column="option_no" />
+		<result property="optionName" column="option_name" />
+		<result property="optionValue" column="option_value" />
+	</resultMap>
+	
+	<select id="getList" parameterType="criteria" resultMap="basketMap">
+		SELECT
+			basket_no, a.product_detail_no product_detail_no , count, b.product_no , option_no, option_name, option_value, product_name, description, price, regdate
+			FROM basket a, product_detail b, shoppingmall.option c, product d
+			WHERE 
+					a.product_detail_no = b.product_detail_no
+                AND a.product_detail_no = c.product_detail_no 
+                AND b.product_no = d.product_no 
+                <if test="memberNo > 0">AND member_no = #{memberNo} </if>
+				<if test="guestSessionId != null">AND guest_session_id = #{guestSessionId}</if>
+				<if test="productDetailNo > 0">AND a.product_detail_no = #{productDetailNo}</if> 
+				
+		ORDER BY basket_no;
+ 	</select>
 	
 	<select id="getTotal" resultType="int">
 		SELECT count(*) from basket

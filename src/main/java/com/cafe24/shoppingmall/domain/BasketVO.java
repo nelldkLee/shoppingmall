@@ -9,5 +9,5 @@ public class BasketVO {
 	private String guestSessionId;
 	private Long productDetailNo;
 	private int count;
-	private ProductVO product;
+	private ProductDetailVO productDetailVo;
 }

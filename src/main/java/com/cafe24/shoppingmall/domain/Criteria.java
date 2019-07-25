@@ -8,6 +8,9 @@ public class Criteria {
 	private int page;
 	private String type;
 	private String keyword;
+	private Long memberNo;
+	private String guestSessionId;
+	private Long productDetailNo;
 	
 	public Criteria() {
 		this.page = 1;

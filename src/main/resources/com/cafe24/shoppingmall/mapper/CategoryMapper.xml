@@ -3,6 +3,7 @@
 
 <mapper namespace="com.cafe24.shoppingmall.mapper.CategoryMapper">
 
+	<!-- 완료 -->
 	<insert id="insert" parameterType="categoryvo">
 		INSERT INTO category(category_name
 							<if test="upperCategoryNo > 0">

@@ -1,6 +1,7 @@
 package com.cafe24.shoppingmall.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.Pattern;
 
@@ -45,4 +46,5 @@ public class MemberVO {
 	private String zipcode;
 	private String normalAddress;
 	private String extendAddress;
+	private List<BasketVO> basketList;
 }
