@@ -24,14 +24,11 @@ public class BaseProductService implements ProductService{
 	@Transactional
 	public void insert(ProductVO vo) {
 		mapper.insert(vo);
-		System.out.println("테스트");
 		List<ProductDetailVO> list = vo.getProductDetailList();
 		list.forEach((productDetailVO)-> productDetailVO.setProductNo(vo.getProductNo()));
 		list.forEach((productDetailVO)-> mapper.insertProductDetail(productDetailVO));
-
-		if(vo.isOptionActive()) {
-			optionService.insertOptionList(vo);	
-		}
+		checkOption(vo);
+		checkCategory(vo);
 	}
 
 	@Override
@@ -57,5 +54,17 @@ public class BaseProductService implements ProductService{
 	@Override
 	public int getTotal(Criteria cri) {
 		return mapper.getTotal(cri);
+	}
+	
+	private void checkOption(ProductVO vo) {
+		if(vo.isOptionActive()) {
+			optionService.insertOptionList(vo);
+		}
+	}
+	
+	private void checkCategory(ProductVO vo) {
+		if(vo.getCategoryList().size() > 0) {
+			mapper.insertProductCategory(vo);
+		}
 	}
 }

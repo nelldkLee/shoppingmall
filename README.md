@@ -198,6 +198,73 @@ public interface GenericRepository<T, K> {
 #### Day3
 - ERD 구조변경
 - ![](images/변경ERD.PNG)
+```java
+
+{
+  "description": "2019 F/W 여름신상긴바지",
+  "displayActive": true,
+  "optionActive": true,
+  "price": 15000,,
+  "productDetailList": [
+    {
+      "optionList": [
+        {
+          "optionName": "색상",
+          "optionValue": "노랑"
+        },{
+          "optionName": "사이즈",
+          "optionValue": "95"
+        }
+
+      ],
+      "stock": 20
+    },{
+      "optionList": [
+        {
+          "optionName": "색상",
+          "optionValue": "파랑"
+        },{
+          "optionName": "사이즈",
+          "optionValue": "100"
+        }
+
+      ],
+      "stock": 100
+    },{
+      "optionList": [
+        {
+          "optionName": "색상",
+          "optionValue": "노랑"
+        },{
+          "optionName": "사이즈",
+          "optionValue": "100"
+        }
+
+      ],
+      "stock": 50
+    }
+  ],
+  "productName": "여름긴바지",
+  "sellingActive": true
+}
+```
 
 #### 이슈사항
-- ERD의 구조를 잘못잡음으로 인해 발생되는 수 많은 수정 작업...
+- ERD의 구조를 잘못잡아 발생되는 수 많은 수정 작업...
+
+
+#### Day4
+
+#### 이슈사항
+- 상품 리스트를 가져올 때 ADMIN과 일반 USER 사이에 필요한 컬럼의 차이 발생
+    - 데이터를 동적쿼리로 구분해서 가져온다
+    - Query 셋을 다르게 하여 가져온다
+    - 전부 가지고 와서 필요한 부분만 화면에 셋팅 시킨다
+    - 우선 전부 가지고 와서 하는 방향을 선택( 필요에 따라 대응하기 쉬워서)
+- 카테고리 단계 및 상품 등록 시 발생하는 연관 프로세스에 관련하여 고민
+  - 상품 등록 시 카테고리 추가는 상품 등록 프로세스와 함께 하지 않고 비동기 방식으로
+  카테고리를 추가 후 가져온 category_no를 상품 등록 form에 같이 보내기로 결정
+  - 상품 등록 프로세스에선 상품과 카테고리의 다대다 관계의 중간 역할을 하는 product_category 테이블에 관계를 이어주는 insert만 한다
+
+
+

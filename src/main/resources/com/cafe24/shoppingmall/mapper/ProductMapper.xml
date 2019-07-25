@@ -33,6 +33,16 @@
 		</selectKey>
 	</insert>
 	
+	
+	<insert id="insertProductCategory" parameterType="productvo">
+		INSERT INTO product_category(product_no, category_no) 
+			VALUES
+			<foreach item="item" collection="categoryList" separator=",">
+			(#{productNo}, #{item.categoryNo})
+			</foreach>
+	</insert>
+	
+	
 	<select id="read" resultType="productvo" parameterType="long">
 		SELECT 
 			product_no productNo, product_name productName, description, price, display_active, selling_active, regdate 
@@ -57,7 +67,7 @@
 	<!-- 진행 해야함. -->
 	<select id="getList" parameterType="criteria" resultType="productvo">
 		SELECT 
-			category_no categoryNo, product_name productName, description, price, display_active, selling_active, thumnail_path, regdate 
+			category_no categoryNo, product_name productName, description, price, display_active displayActivce, selling_active sellingActive, regdate 
 		FROM product 
 		ORDER BY product_no DESC LIMIT #{limitStart}, #{perPageSize}  
 	</select>
