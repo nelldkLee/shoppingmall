@@ -9,11 +9,19 @@ public class Criteria {
 	private String type;
 	private String keyword;
 	private Long memberNo;
-	private String guestSessionId;
+	private String sessionId;
 	private Long productDetailNo;
 	
 	public Criteria() {
 		this.page = 1;
+	}
+	public Criteria setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+		return this;
+	}
+	public Criteria setProductDetailNo(Long productDetailNo) {
+		this.productDetailNo = productDetailNo;
+		return this;
 	}
 	
 	public void setPage(int page) {
@@ -24,5 +32,9 @@ public class Criteria {
 	}
 	public int getPerPageSize() {
 		return PageMaker.PER_PAGE_SIZE;
+	}
+
+	public boolean isMember() {
+		return memberNo > 0 ? true:false;
 	}
 }

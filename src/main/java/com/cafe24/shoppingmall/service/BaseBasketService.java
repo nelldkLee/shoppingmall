@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cafe24.shoppingmall.domain.BasketVO;
 import com.cafe24.shoppingmall.domain.Criteria;
+import com.cafe24.shoppingmall.domain.MemberVO;
 import com.cafe24.shoppingmall.mapper.BasketMapper;
 
 @Service
@@ -17,21 +18,18 @@ public class BaseBasketService implements BasketService{
 	
 	@Override
 	public void insert(BasketVO vo) {
-		checkDuplicatedProduck(vo);
+		checkDuplicatedProduct(vo, new Criteria().setProductDetailNo(vo.getProductDetailNo()));
 	}
 
-	private void checkDuplicatedProduck(BasketVO vo) {
-		Criteria cri = new Criteria();
-		cri.setProductDetailNo(vo.getProductDetailNo());
+	@Override
+	public void checkDuplicatedProduct(BasketVO vo, Criteria cri) {
 		List<BasketVO> list =  mapper.getList(cri);
+		// 기존에 장바구니에 같은 상품 담겨있을 시 수량 더해주기.
 		if(list.size() > 0) {
-			System.out.println("update 테스트");
-			System.out.println("기존 count" + list.get(0).getCount());
-			System.out.println("추가되는 count" + vo.getCount());
 			vo.setCount(list.get(0).getCount() + vo.getCount());
 			mapper.update(vo);
+		// 장바구니에 없으면 장바구니에 상품추가
 		} else {
-			System.out.println("insert 테스트");
 			mapper.insert(vo);
 		}
 	}
@@ -61,4 +59,14 @@ public class BaseBasketService implements BasketService{
 		return mapper.getTotal(cri);
 	}
 
+	@Override
+	public void deleteBasketsByMember(MemberVO vo) {
+		
+		if(vo.isMember()) {
+			mapper.deleteByMemberNo(vo.getMemberNo());
+		}else {
+			mapper.deleteBySessionId(vo.getSessionId());
+		}
+	}
+	
 }

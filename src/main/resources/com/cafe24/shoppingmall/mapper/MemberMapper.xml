@@ -24,6 +24,11 @@
 			member_no, id, member_name, email, telephone, gender,  regdate, zipcode, normal_address, extend_address 
 		FROM member WHERE id = #{id}
 	</select>
+	<select id="findByIdAndPassword" resultType="membervo" parameterType="membervo">
+		SELECT 
+			member_no, id, member_name, email, telephone, gender,  regdate, zipcode, normal_address, extend_address 
+		FROM member WHERE id = #{id} AND password = #{password}
+	</select>
 	
 	<update id="update" parameterType="membervo">
 		UPDATE member 

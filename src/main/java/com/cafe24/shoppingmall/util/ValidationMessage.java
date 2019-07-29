@@ -17,6 +17,9 @@ public class ValidationMessage {
 	public static final String PASSWORD_REGEX="^(?=.*\\d)(?=.*[~`!@#$%\\^&*()-])(?=.*[a-z])(?=.*[A-Z]).{9,12}$";
 	
 	public static final String ID_DUPLICATED = "이미 사용중인 아이디입니다.";
+	public static final String ID_PW_WRONG = "회원 아이디 또는 비밀번호가 일치하지 않습니다."; 
 	
+	public static final String ID_FIELD = "id";
+	public static final String ID_PW_FIELD = "id_pw";
 
 }

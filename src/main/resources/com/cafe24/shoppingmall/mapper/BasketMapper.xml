@@ -41,11 +41,19 @@
 	<update id="update" parameterType="basketvo">
 		UPDATE basket 
 			SET count = #{count}  
-		WHERE product_detail_no = #{productDetailNo}
+		WHERE basket_no = #{basketNo}
 	</update>
 	
 	<delete id="delete" parameterType="long">
 		DELETE from basket WHERE basket_no = #{basketNo} 
+	</delete>
+	
+	<delete id="deleteBySessionId" parameterType="string">
+		DELETE from basket WHERE session_id = #{sessionId} 
+	</delete>
+	
+	<delete id="deleteByMemberNo" parameterType="long">
+		DELETE from basket WHERE member_no = #{memberNo} 
 	</delete>
 	
 	<!-- 진행중 
@@ -54,13 +62,13 @@
 	-->
 	
 	<resultMap type="com.cafe24.shoppingmall.domain.BasketVO" id="basketMap">
-		<id property="productDetailNo" column="product_detail_no" />
+		<id property="productDetailNo" column="a.product_detail_no" />
 		<result property="basketNo" column="basket_no" />
 		<result property="count" column="count" />
 		<collection property="productDetailVo" resultMap="productDetailMap" />
 	</resultMap>
 	<resultMap type="com.cafe24.shoppingmall.domain.ProductDetailVO" id="productDetailMap">
-		<id property="productNo" column="product_no" />
+		<id property="productNo" column="b.product_no" />
 		<collection property="optionList" resultMap="optionMap" />
 	</resultMap>
 	
@@ -72,14 +80,14 @@
 	
 	<select id="getList" parameterType="criteria" resultMap="basketMap">
 		SELECT
-			basket_no, a.product_detail_no product_detail_no , count, b.product_no , option_no, option_name, option_value, product_name, description, price, regdate
+			basket_no, a.product_detail_no , count, b.product_no, option_no, option_name, option_value, product_name, description, price, regdate
 			FROM basket a, product_detail b, shoppingmall.option c, product d
 			WHERE 
 					a.product_detail_no = b.product_detail_no
                 AND a.product_detail_no = c.product_detail_no 
                 AND b.product_no = d.product_no 
                 <if test="memberNo > 0">AND member_no = #{memberNo} </if>
-				<if test="guestSessionId != null">AND guest_session_id = #{guestSessionId}</if>
+				<if test="sessionId != null">AND session_id = #{sessionId}</if>
 				<if test="productDetailNo > 0">AND a.product_detail_no = #{productDetailNo}</if> 
 				
 		ORDER BY basket_no;

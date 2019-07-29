@@ -282,6 +282,40 @@ public interface GenericRepository<T, K> {
    - 세션에 판매가능수량을 담아 세션이 없어질 때의 이벤트 핸들러에 해당 세션이 메모리에서 내려갈 때 결제하지 않았다면 수량을 늘려준다.
    - 결제프로세스가 다 성공 시 Controller에서 사용자의 Session에 담겨있는 판매가능수량을 지워주어 SessionDestroyedEvent 리스너의 핸들러에서 아무런 작업이 진행되지 않게 한다.
 
+### 3주차
+#### Day1
+- 회원 로그인시 장바구니 추가 프로세스 정리
+- Member 클래스 역할 추가
+- 리팩토링
+#### 이슈사항
+- 회원 로그인시 로그인 전에 담아둔 장바구니 상품 기존 회원 장바구니 데이터와 통합
+```java
+private void checkBasketAddedProduct(MemberVO vo) {
+  List<BasketVO> basketList = basketService.getList(new Criteria().setSessionId(vo.getSessionId()));
+  
+  if(!basketList.isEmpty()) {
+    basketList.forEach((basketVO)->{
+      basketVO.setMemberNo(vo.getMemberNo());
+      basketService.insert(basketVO);
+    });
+    basketService.deleteBasketsByMember(vo);
+  }
+}
+```
+- Member 클래스 회원인지 아닌지 판단 여부
+```java
+public boolean isMember() {
+  return sessionId == null ? true : false;
+}
+```
+- CustomRuntimeException 부분 반복 부분 리팩토링
+```java
+private void checkValidCustomException(boolean check, String message, String field) {
+  if(check) {
+    throw new ValidCustomException(message, field);
+  }
+}
+```
 
 
 

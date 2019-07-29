@@ -40,11 +40,16 @@ public class MemberVO {
     @Email(message = ValidationMessage.EAMAIL_PATTERN)
 	private String email;
     @Pattern(regexp = ValidationMessage.TELEPHONE_REGEX, message = ValidationMessage.TELEPHONE_PATTERN)
-	private String telephone;
+    private String telephone;
+    private String sessionId;
     private String gender;
 	private Date regDate;
 	private String zipcode;
 	private String normalAddress;
 	private String extendAddress;
 	private List<BasketVO> basketList;
+	
+	public boolean isMember() {
+		return sessionId == null ? true : false;
+	}
 }
