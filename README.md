@@ -316,7 +316,60 @@ private void checkValidCustomException(boolean check, String message, String fie
   }
 }
 ```
+#### Day2
+- 이미지 프로세스 정리
+- 관리자 용 상품 수정 프로세스 정리
+- 유효성 검사 @Validated groups 명시할 field 파악
+#### 이슈사항
+- 이미지 업로드 경우 API 서버를 서버 단에서 접근해야할지 클라이언트가 바로 접근 가능할지 고민
+  - 서버단에서 접근한다는 가정하에 이미지는 경로 등을 저장하는 API로 설계
+  - 다시 말해 앞단의 서버에서 이미지는 저장하고 API서버는 경로만 저장하기로 결정
+  - 상품 프로세스 수정 필요
+- 트랜잭션을 생각하면서 API서버에서 처리해야 하는 일들과 세션데이터와 연관있는 프로세스 간의 명확한 분리가 어려움
+  - 트랜잭션이 필요한 최소한의 영역 설정이 필요
+- 메인이미지를 여러 개의 이미지와 별도로 저장해야 할지 고민
+  - 상품에 필요한 메인(썸네일) 이미지를 별도의 컬럼으로 product 테이블에 추가하기로 결정
+- 관리자 페이지에서 상품 수정 프로세스를 고민하게 됨
+  - 상품 등록은 아래 처럼 한 프로세스에서 진행되는 것으로 하였지만 수정 부분은 분리하여 진행하는 것이 좀 더 맞다고 판단되어 각 영역 별로 비동기 호출하는 방식으로 수정을 할 예정
+```java
+@Transactional
+public void insert(ProductVO vo) {
+  mapper.insert(vo);
+  List<ProductDetailVO> list = vo.getProductDetailList();
+  list.forEach((productDetailVO)-> productDetailVO.setProductNo(vo.getProductNo()));
+  list.forEach((productDetailVO)-> mapper.insertProductDetail(productDetailVO));
+  checkOption(vo);
+  checkCategory(vo);
+  checkImage(vo);
+}
 
+private void checkOption(ProductVO vo) {
+  if(vo.isOptionActive()) {
+    optionService.insertOptionList(vo);
+  }
+}
+	
+private void checkCategory(ProductVO vo) {
+  if(vo.getCategoryList().size() > 0) {
+    mapper.insertProductCategory(vo);
+  }
+}
+
+private void checkImage(ProductVO vo) {
+  if(vo.getImageList().size() > 0) {
+    imageService.insertImageList(vo);
+  }
+}
+```
+  - 영역 별로 나누어 비동기 호출을 통해 수정을 한다고 했을 때 고민해야 하는 부분이 생김
+    - 유효성 검사를 VO에서 진행하였는데 기존 VO를 사용할 수가 없는 상황이 발생
+    - 수정 영역을 나눌 때 마다 @Valid를 위한 VO를 만드는 방식은 아닌 것으로 판단됨
+      - 어노테이션에 groups 요소를 통해 등록과 수정에 따른 유효성 필드를 구분하여 명시하면 문제가 해결되는 것으로 파악됨.
+      - @Valid 어노테이션에서 @Validated로 변경 후 인자로 groups에 해당하는 class를 명시해주면 된다.
+      - @Validated({ModifyStock.class}) 이런 식으로 Controller 파라미터에 명시해주고 해당 VO에 @NotBlank(groups={ModifyStock.class}) groups를 적어주면 된다. 안적으면 Default.class 타입으로 인식하므로 적절히 사용하면 될 것으로 파악
+      - 작업 진행 후 해당 부분 소스코드로 적어둘 예정
+      
+  
 
 
   

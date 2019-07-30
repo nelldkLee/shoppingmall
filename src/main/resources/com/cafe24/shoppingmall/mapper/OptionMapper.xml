@@ -30,7 +30,8 @@
 	
 	<update id="update" parameterType="optionvo">
 		UPDATE option 
-			SET count = #{count}  
+			SET option_name = #{optionName},
+				option_value = #{optionValue} 
 		WHERE option_no = #{optionNo}
 	</update>
 	

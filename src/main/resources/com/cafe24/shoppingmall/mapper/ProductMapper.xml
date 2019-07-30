@@ -54,9 +54,10 @@
 			SET product_name = #{productName}, 
 				description = #{description},
 				price = #{price},
+				main_image_path = #{mainImagePath}, 
+				option_active = #{optionActive},
 				display_active = #{displayActive}, 
-				selling_active = #{sellingActive},
-				option_active = #{optionActive}
+				selling_active = #{sellingActive} 
 		WHERE product_no = #{productNo}
 	</update>
 	

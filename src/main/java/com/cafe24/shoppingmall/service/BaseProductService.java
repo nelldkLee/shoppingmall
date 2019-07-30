@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cafe24.shoppingmall.domain.Criteria;
+import com.cafe24.shoppingmall.domain.ImageVO;
 import com.cafe24.shoppingmall.domain.ProductDetailVO;
 import com.cafe24.shoppingmall.domain.ProductVO;
 import com.cafe24.shoppingmall.mapper.OptionMapper;
@@ -19,6 +20,8 @@ public class BaseProductService implements ProductService{
 	private ProductMapper mapper;
 	@Autowired
 	private OptionService optionService;
+	@Autowired
+	private ImageService imageService;
 	
 	@Override
 	@Transactional
@@ -29,8 +32,9 @@ public class BaseProductService implements ProductService{
 		list.forEach((productDetailVO)-> mapper.insertProductDetail(productDetailVO));
 		checkOption(vo);
 		checkCategory(vo);
+		checkImage(vo);
 	}
-
+	
 	@Override
 	public ProductVO read(Long key) {
 		return mapper.read(key);
@@ -67,4 +71,11 @@ public class BaseProductService implements ProductService{
 			mapper.insertProductCategory(vo);
 		}
 	}
+
+	private void checkImage(ProductVO vo) {
+		if(vo.getImageList().size() > 0) {
+			imageService.insertImageList(vo);
+		}
+	}
+
 }
