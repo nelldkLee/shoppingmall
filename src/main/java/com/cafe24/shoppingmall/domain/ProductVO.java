@@ -16,7 +16,7 @@ public class ProductVO {
 	private boolean optionActive;
 	private String mainImagePath;
 	private List<CategoryVO> categoryList;
-	private List<ProductDetailVO> productDetailList;
+	private List<ItemVO> ItemList;
 	
 	private List<ImageVO> imageList;
 }

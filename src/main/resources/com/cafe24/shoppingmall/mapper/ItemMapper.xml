@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cafe24.shoppingmall.mapper.ItemMapper">
+	
+	<!-- 완료 -->
+	<insert id="insert" parameterType="itemvo">
+		INSERT INTO item(
+								product_no
+								<if test="stock > 0">
+								, stock 
+								</if> 
+								) 
+						VALUES(#{productNo}
+								<if test="stock > 0">
+								, #{stock}
+								</if>
+									)
+		<selectKey keyProperty="itemNo" resultType="long" order="AFTER">
+			select
+			last_insert_id()
+		</selectKey>
+	</insert>
+	
+	
+	<select id="read" resultType="itemvo" parameterType="long">
+	</select>
+	
+	<update id="update" parameterType="itemvo">
+		UPDATE item 
+			SET stock = #{stock} 
+		WHERE item_no = #{itemNo}
+	</update>
+	
+	<delete id="delete" parameterType="long">
+		DELETE from item WHERE item_no = #{itemNo} 
+	</delete>
+	
+	<select id="getList" parameterType="criteria" resultType="itemvo">
+	</select>
+	
+	<select id="getTotal" resultType="int">
+		SELECT count(*) from item
+	</select>
+	
+</mapper>

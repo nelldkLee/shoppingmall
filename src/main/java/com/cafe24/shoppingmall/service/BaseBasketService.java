@@ -18,7 +18,7 @@ public class BaseBasketService implements BasketService{
 	
 	@Override
 	public void insert(BasketVO vo) {
-		checkDuplicatedProduct(vo, new Criteria().setProductDetailNo(vo.getProductDetailNo()));
+		checkDuplicatedProduct(vo, new Criteria().setItemNo(vo.getItemNo()));
 	}
 
 	@Override

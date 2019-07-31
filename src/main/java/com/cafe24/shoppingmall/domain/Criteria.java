@@ -10,7 +10,7 @@ public class Criteria {
 	private String keyword;
 	private Long memberNo;
 	private String sessionId;
-	private Long productDetailNo;
+	private Long itemNo;
 	
 	public Criteria() {
 		this.page = 1;
@@ -19,8 +19,8 @@ public class Criteria {
 		this.sessionId = sessionId;
 		return this;
 	}
-	public Criteria setProductDetailNo(Long productDetailNo) {
-		this.productDetailNo = productDetailNo;
+	public Criteria setItemNo(Long itemNo) {
+		this.itemNo = itemNo;
 		return this;
 	}
 	

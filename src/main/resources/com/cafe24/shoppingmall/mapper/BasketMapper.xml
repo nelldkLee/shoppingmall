@@ -6,7 +6,7 @@
 	
 	<insert id="insert" parameterType="basketvo">
 	INSERT INTO basket(
-					product_detail_no,
+					item_no,
 					count
 					<if test="memberNo > 0">
 						,member_no
@@ -15,7 +15,7 @@
 						,guest_session_id
 					</if>
 					)
-					VALUES(#{productDetailNo},
+					VALUES(#{itemNo},
 					#{count}
 					<if test="memberNo > 0">
 						,#{memberNo}
@@ -32,7 +32,7 @@
 	<select id="read" resultType="basketvo" parameterType="long">
 		SELECT 
 			basket_no basketNo, baske basketName   
-		FROM basket WHERE product_detail_no = #{productDetailNo} AND 
+		FROM basket WHERE item_no = #{itemNo} AND 
 	</select>
 	
 	
@@ -62,12 +62,12 @@
 	-->
 	
 	<resultMap type="com.cafe24.shoppingmall.domain.BasketVO" id="basketMap">
-		<id property="productDetailNo" column="a.product_detail_no" />
+		<id property="itemNo" column="a.item_no" />
 		<result property="basketNo" column="basket_no" />
 		<result property="count" column="count" />
-		<collection property="productDetailVo" resultMap="productDetailMap" />
+		<collection property="itemVo" resultMap="itemMap" />
 	</resultMap>
-	<resultMap type="com.cafe24.shoppingmall.domain.ProductDetailVO" id="productDetailMap">
+	<resultMap type="com.cafe24.shoppingmall.domain.ItemVO" id="itemMap">
 		<id property="productNo" column="b.product_no" />
 		<collection property="optionList" resultMap="optionMap" />
 	</resultMap>
@@ -80,15 +80,15 @@
 	
 	<select id="getList" parameterType="criteria" resultMap="basketMap">
 		SELECT
-			basket_no, a.product_detail_no , count, b.product_no, option_no, option_name, option_value, product_name, description, price, regdate
-			FROM basket a, product_detail b, shoppingmall.option c, product d
+			basket_no, a.item_no , count, b.product_no, option_no, option_name, option_value, product_name, description, price, regdate
+			FROM basket a, item b, shoppingmall.option c, product d
 			WHERE 
-					a.product_detail_no = b.product_detail_no
-                AND a.product_detail_no = c.product_detail_no 
+					a.item_no = b.item_no
+                AND a.item_no = c.item_no 
                 AND b.product_no = d.product_no 
                 <if test="memberNo > 0">AND member_no = #{memberNo} </if>
 				<if test="sessionId != null">AND session_id = #{sessionId}</if>
-				<if test="productDetailNo > 0">AND a.product_detail_no = #{productDetailNo}</if> 
+				<if test="itemNo > 0">AND a.item_no = #{itemNo}</if> 
 				
 		ORDER BY basket_no;
  	</select>

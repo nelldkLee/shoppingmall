@@ -7,7 +7,7 @@ public class BasketVO {
 	private Long basketNo;
 	private Long memberNo;
 	private String sessionId;
-	private Long productDetailNo;
+	private Long itemNo;
 	private int count;
-	private ProductDetailVO productDetailVo;
+	private ItemVO itemVo;
 }

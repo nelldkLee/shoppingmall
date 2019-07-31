@@ -1,7 +1,9 @@
 package com.cafe24.shoppingmall.util;
 
 public class ValidationMessage {
-	
+	/*
+	 * 회원
+	 * */
 	public static final String ID_BLANK = "아이디를 작성해주세요.";
 	public static final String MEMBER_NAME_BLANK = "이름을 작성해주세요.";
 	public static final String EMAIL_BLANK = "이메일을 작성해주세요.";
@@ -21,5 +23,10 @@ public class ValidationMessage {
 	
 	public static final String ID_FIELD = "id";
 	public static final String ID_PW_FIELD = "id_pw";
-
+	
+	
+	/*
+	 * 아이템
+	 * */
+	public static final String STOCK_PATTERN = "0 또는 양수를 입력해주세요.";
 }

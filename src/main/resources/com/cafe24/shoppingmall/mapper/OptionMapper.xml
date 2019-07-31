@@ -5,16 +5,16 @@
 	
 	<!-- 완료 -->
 	<insert id="insert" parameterType="optionvo">
-		INSERT INTO option(product_detail_no, option_name, option_value) 
-			VALUES(#{productDetailNo}, #{optionName}, #{optionValue})
+		INSERT INTO option(item_no, option_name, option_value) 
+			VALUES(#{itemNo}, #{optionName}, #{optionValue})
 	</insert>
 	
 	<!-- 완료 -->  
-	<insert id="insertOptionList" parameterType="productdetailvo"> 
-		INSERT INTO option(product_detail_no, option_name, option_value) 
+	<insert id="insertOptionList" parameterType="itemvo"> 
+		INSERT INTO option(item_no, option_name, option_value) 
 			VALUES 
-			<foreach item="item" collection="optionList" separator=",">
-			(#{productDetailNo}, #{item.optionName}, #{item.optionValue})
+			<foreach item="target" collection="optionList" separator=",">
+			(#{itemNo}, #{target.optionName}, #{target.optionValue})
 			</foreach>
 	</insert>
 	

@@ -48,7 +48,7 @@ public class BaseOptionService implements OptionService{
 
 	@Override
 	public void insertOptionList(ProductVO vo) {
-		vo.getProductDetailList().forEach((productDetail)-> mapper.insertOptionList(productDetail));
+		vo.getItemList().forEach((item)-> mapper.insertOptionList(item));
 	}
 
 }

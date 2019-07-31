@@ -14,26 +14,6 @@
 		</selectKey> 
 	</insert>
 	
-	<!-- 완료 -->
-	<insert id="insertProductDetail" parameterType="productdetailvo">
-		INSERT INTO product_detail(
-									product_no
-									<if test="stock > 0">
-									, stock 
-									</if> 
-									) 
-							VALUES(#{productNo}
-									<if test="stock > 0">
-									, #{stock}
-									</if>
-									)
-		<selectKey keyProperty="productDetailNo" resultType="long" order="AFTER">
-			select
-			last_insert_id()
-		</selectKey>
-	</insert>
-	
-	
 	<insert id="insertProductCategory" parameterType="productvo">
 		INSERT INTO product_category(product_no, category_no) 
 			VALUES

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cafe24.shoppingmall.mapper.imageMapper">
+<mapper namespace="com.cafe24.shoppingmall.mapper.ImageMapper">
 	
 	<!-- 완료 -->  
-	<insert id="insertimageList" parameterType="productvo"> 
+	<insert id="insertImageList" parameterType="productvo"> 
 		INSERT INTO product_image(product_no, image_order, image_path) 
 			VALUES 
-			<foreach item="item" collection="imageList" separator=",">
-			(#{productNo}, #{item.imageOrder}, #{item.imagePath})
+			<foreach item="target" collection="imageList" separator=",">
+			(#{productNo}, #{target.imageOrder}, #{target.imagePath})
 			</foreach>
 	</insert>
 	
