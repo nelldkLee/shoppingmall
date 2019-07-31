@@ -369,9 +369,22 @@ private void checkImage(ProductVO vo) {
       - @Validated({ModifyStock.class}) 이런 식으로 Controller 파라미터에 명시해주고 해당 VO에 @NotBlank(groups={ModifyStock.class}) groups를 적어주면 된다. 안적으면 Default.class 타입으로 인식하므로 적절히 사용하면 될 것으로 파악
       - 작업 진행 후 해당 부분 소스코드로 적어둘 예정
       
+
+#### Day3
+- ProductDetail 클래스 Item 클래스로 변경
   
+#### 이슈사항
+- 상품 재고 수량 변경 API URL 네이밍 관련하여 고민
+  - 기존의 RESTFul하게 만들어둔 API 네이밍과 성질이 다른 문제가 있음
+  - URL에 /admin/ 을 포함시켜야하는가라는 고민
+    - admin 부분은 프런트 서버에서 들어가고 API 서버에선 빼는 것으로 결정
+- ProductDetail 클래스 Item 클래스로 변경
+  - Product 프로세스에 있던 ProductDetail 부분 Item 프로세스로 분리
+  - 변경 시 발생하는 코드 수정 완료
+- 상품 등록 프로세스 마무리
+- 상품 재고 수정 유효성 검사 마무리
 
-
+  
   
 
 
