@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cafe24.shoppingmall.mapper.OrderMapper">
+	
+	<!-- 완료 -->
+	<insert id="insert" parameterType="ordervo">
+		INSERT INTO order(progress_state, receive_name, zipcode, normal_address, extend_address, total_price, regdate) 
+			VALUES(#{progressState}, #{receiveName}, #{zipcode}, #{normalAddress}, #{extendAddress}, #{totalPrice}, now())
+			
+		<selectKey keyProperty="orderNo" resultType="long" order="AFTER">
+			select
+			last_insert_id()
+		</selectKey> 
+	</insert>
+	
+	<insert id="insertorderItem" parameterType="orderitemvo">
+		INSERT INTO order_category(order_no, category_no) 
+			VALUES
+			<foreach item="item" collection="categoryList" separator=",">
+			(#{orderNo}, #{item.categoryNo})
+			</foreach>
+	</insert>
+	
+	
+	<select id="read" resultType="ordervo" parameterType="long">
+		SELECT 
+			order_no orderNo, order_name orderName, description, price, display_active, selling_active, regdate 
+		FROM order WHERE order_no = #{no}
+	</select>
+	
+	<update id="update" parameterType="ordervo">
+		UPDATE order 
+			SET order_name = #{orderName}, 
+				description = #{description},
+				price = #{price},
+				main_image_path = #{mainImagePath}, 
+				option_active = #{optionActive},
+				display_active = #{displayActive}, 
+				selling_active = #{sellingActive} 
+		WHERE order_no = #{orderNo}
+	</update>
+	
+	<delete id="delete" parameterType="long">
+		DELETE from order WHERE order_no = #{no} 
+	</delete>
+	
+	<!-- 진행 해야함. -->
+	<select id="getList" parameterType="criteria" resultType="ordervo">
+		SELECT 
+			category_no categoryNo, order_name orderName, description, price, display_active displayActivce, selling_active sellingActive, regdate 
+		FROM order 
+		ORDER BY order_no DESC LIMIT #{limitStart}, #{perPageSize}  
+	</select>
+	
+	<select id="getTotal" resultType="int">
+		SELECT count(*) from order
+	</select>
+	
+</mapper>

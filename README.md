@@ -384,7 +384,63 @@ private void checkImage(ProductVO vo) {
 - 상품 등록 프로세스 마무리
 - 상품 재고 수정 유효성 검사 마무리
 
-  
-  
+#### Day4
+- 주문 프로세스 정리
 
+#### 이슈사항
+- 주문 프로세스 정리
+  - Enum 타입 설정
+- 유효성 문제 발견
+```java
+public enum Progress {
+	DEPOSIT_WAIT(1), DEPOSIT_DONE(2), DELIVERY_WAIT(3), DELIVERY_PROCEEDING(4), DELIVERY_DONE(5);
+
+	private final int value;
+
+	Progress(int value) {
+		this.value = value;
+	}
+	public int getValue() {
+		return value;
+	}
+	public static Progress valueOf(int value) {
+		switch(value) {
+			case 1: return Progress.DEPOSIT_WAIT;
+			case 2: return Progress.DEPOSIT_DONE;
+			case 3: return Progress.DELIVERY_WAIT;
+			case 4: return Progress.DELIVERY_PROCEEDING;
+			case 5: return Progress.DELIVERY_DONE;
+			default: throw new AssertionError("Unknown Progress: " + value);
+		}
+	}
+}
+```
+  - Enum 타입이 Mybatis와 문제없이 바인딩 되는지 TDD 필요
+- 주문 총 금액 계산하는 것은 주문 클래스의 책임으로 판단
+```java
+@Data
+public class OrderVO {
+	private String orderNo;
+	private String memberNo;
+	private Enum<Progress> progress;
+	private	String receiveName;
+	private String zipcode;
+	private String normalAddress;
+	private String extendAddress;
+	private int totalPrice;
+	private Date regdate;
+	private List<OrderItemVO> orderItemList;
+	
+	public int getTotalPrice() {
+		orderItemList.forEach((orderItem)->{
+			totalPrice += orderItem.getPrice() * orderItem.getCount();
+		});
+		return totalPrice;
+	}
+	
+}
+
+```
+- VO클래스에 Collection 타입 유효성을 체크하지 못하는 것을 파악
+  - Custom 클래스를 만들고 적용해야 한다는 구글링 및 블로그 내용을 발견하여 추후 적용 예정
 
