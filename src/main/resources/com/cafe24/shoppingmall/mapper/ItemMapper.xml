@@ -36,6 +36,7 @@
 		DELETE from item WHERE item_no = #{itemNo} 
 	</delete>
 	
+	<!-- 해야할 것 BasketMapper 참조 -->
 	<select id="getList" parameterType="criteria" resultType="itemvo">
 	</select>
 	

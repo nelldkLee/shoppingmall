@@ -10,6 +10,7 @@
 		<typeAlias alias="optionvo" type="com.cafe24.shoppingmall.domain.OptionVO"/>
 		<typeAlias alias="imagevo" type="com.cafe24.shoppingmall.domain.ImageVO"/>
 		<typeAlias alias="ordervo" type="com.cafe24.shoppingmall.domain.OrderVO"/>
+		<typeAlias alias="orderitemvo" type="com.cafe24.shoppingmall.domain.OrderItemVO"/>
 		<typeAlias alias="criteria" type="com.cafe24.shoppingmall.domain.Criteria"/>
     </typeAliases>	
 </configuration>

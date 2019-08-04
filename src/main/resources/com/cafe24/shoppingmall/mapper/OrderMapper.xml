@@ -14,11 +14,11 @@
 		</selectKey> 
 	</insert>
 	
-	<insert id="insertorderItem" parameterType="orderitemvo">
-		INSERT INTO order_category(order_no, category_no) 
+	<insert id="insertorderItem" parameterType="ordervo">
+		INSERT INTO order_item(order_no, item_no, count, price) 
 			VALUES
-			<foreach item="item" collection="categoryList" separator=",">
-			(#{orderNo}, #{item.categoryNo})
+			<foreach item="target" collection="orderItemList" separator=",">
+			(#{orderNo}, #{target.item_no}, #{target.count}, #{target.price})
 			</foreach>
 	</insert>
 	

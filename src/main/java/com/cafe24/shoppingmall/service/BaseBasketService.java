@@ -18,20 +18,7 @@ public class BaseBasketService implements BasketService{
 	
 	@Override
 	public void insert(BasketVO vo) {
-		checkDuplicatedProduct(vo, new Criteria().setItemNo(vo.getItemNo()));
-	}
-
-	@Override
-	public void checkDuplicatedProduct(BasketVO vo, Criteria cri) {
-		List<BasketVO> list =  mapper.getList(cri);
-		// 기존에 장바구니에 같은 상품 담겨있을 시 수량 더해주기.
-		if(list.size() > 0) {
-			vo.setCount(list.get(0).getCount() + vo.getCount());
-			mapper.update(vo);
-		// 장바구니에 없으면 장바구니에 상품추가
-		} else {
-			mapper.insert(vo);
-		}
+		isDuplicatedProduct(vo, new Criteria().setItemNo(vo.getItemNo()));
 	}
 
 	@Override
@@ -58,7 +45,19 @@ public class BaseBasketService implements BasketService{
 	public int getTotal(Criteria cri) {
 		return mapper.getTotal(cri);
 	}
-
+	
+	@Override
+	public void isDuplicatedProduct(BasketVO vo, Criteria cri) {
+		List<BasketVO> list =  mapper.getList(cri);
+		// 기존에 장바구니에 같은 상품 담겨있을 시 수량 더해주기.
+		if(list.size() > 0) {
+			vo.setCount(list.get(0).getCount() + vo.getCount());
+			mapper.update(vo);
+		// 장바구니에 없으면 장바구니에 상품추가
+		} else {
+			mapper.insert(vo);
+		}
+	}
 	@Override
 	public void deleteBasketsByMember(MemberVO vo) {
 		
@@ -67,6 +66,11 @@ public class BaseBasketService implements BasketService{
 		}else {
 			mapper.deleteBySessionId(vo.getSessionId());
 		}
+	}
+
+	@Override
+	public void deleteBasketByItemNo(Long itemNo) {
+		mapper.deleteByItemNo(itemNo);
 	}
 	
 }

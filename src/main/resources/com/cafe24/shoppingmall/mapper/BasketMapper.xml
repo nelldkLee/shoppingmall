@@ -31,12 +31,9 @@
 	-->
 	<select id="read" resultType="basketvo" parameterType="long">
 		SELECT 
-			basket_no basketNo, baske basketName   
+			basket_no basketNo, basket_name basketName   
 		FROM basket WHERE item_no = #{itemNo} AND 
 	</select>
-	
-	
-	
 	
 	<update id="update" parameterType="basketvo">
 		UPDATE basket 
@@ -54,6 +51,13 @@
 	
 	<delete id="deleteByMemberNo" parameterType="long">
 		DELETE from basket WHERE member_no = #{memberNo} 
+	</delete>
+	
+	<delete id="deleteByMemberNoAndItemNo">
+		DELETE from basket WHERE member_no = #{memberNo} AND item_no = #{itemNo}  
+	</delete>
+	<delete id="deleteBySessionIdAndItemNo">
+		DELETE from basket WHERE session_id = #{sessionId} AND item_no = #{itemNo}
 	</delete>
 	
 	<!-- 진행중 

@@ -444,3 +444,293 @@ public class OrderVO {
 - VO클래스에 Collection 타입 유효성을 체크하지 못하는 것을 파악
   - Custom 클래스를 만들고 적용해야 한다는 구글링 및 블로그 내용을 발견하여 추후 적용 예정
 
+#### Day5~6
+- 주문 프로세스 정리
+
+#### 이슈사항
+- 주문 프로세스 정리
+  - 주문 시 장바구니에 있는 상품 지워주는 부분 로직 정리
+- 트랜잭션 고민
+  - API 서버가 아닌 Front 서버에선 트랜잭션 처리가 불가
+  - 장바구니 상품 지워주기 위해 OrderVO에는 결국 memberNo 혹은 sessionId가 매개변수로 전달 됨
+
+#### 일정이 밀린 이유
+- 트랜잭션 등의 프로세스의 범위를 세세하게 생각하지 못해 일정 추가
+- ERD의 변화로 인해 발생되는 수 많은 수정작업 등으로 일정 추가
+- TDD에 익숙하지 못해 시간 지연으로 인한 일정 추가
+
+#### 기본 인터페이스 설명
+- REST API를 분석하여 동일한 규격을 인터페이스로 설계
+```java
+public interface GenericRESTController<T> {
+
+	@GetMapping
+	public JSONResult list(Criteria cri);
+	
+	@GetMapping("/{key}")
+	public JSONResult view(Long no);//@PathVariable(value="")
+	
+	@PostMapping
+	public JSONResult register(T vo);//@RequestBody
+	
+	@PutMapping
+	public JSONResult modify(T vo);//@RequestBody
+	
+	@DeleteMapping("/{key}")
+	public JSONResult remove(Long no);//@PathVariable(value="")
+
+}
+```
+-------
+- RESTFul한 Controller는 아래와 같이 Service를 활용하기에 추상클래스로 만듦
+```java
+public abstract class AbstractRESTController<T, S extends GenericService> implements GenericRESTController<T>{
+	
+	@Autowired
+	protected S service;
+
+	@Override
+	public JSONResult list(Criteria cri) {
+		return JSONResult.success(service.getList(cri));
+	}
+
+	@Override
+	public JSONResult view(@PathVariable(value="key") Long no) {
+		return JSONResult.success(service.read(no));
+	}
+
+	@Override
+	public JSONResult register(@Valid @RequestBody T vo) {
+		service.insert(vo);
+		return JSONResult.success(null);
+	}
+
+	@Override
+	public JSONResult modify(@Valid @RequestBody T vo) {
+		service.update(vo);
+		return JSONResult.success(null);
+	}
+
+	@Override
+	public JSONResult remove(@PathVariable(value="key") Long no) {
+		service.delete(no);
+		return JSONResult.success();
+	}
+}
+```
+-------
+- RESTFul한 컨트롤러는 AbstractRESTController를 구현하면 원활히 동작
+- 아래와 같은 형태로 VO와 Service 인터페이스를 명시해주면 끝
+```java
+@RestController
+@RequestMapping("/api/basket")
+public class BasketController extends AbstractRESTController<BasketVO, BasketService> {
+
+}
+```
+```java
+@RestController
+@RequestMapping("/api/category")
+public class CategoryController extends AbstractRESTController<CategoryVO, CategoryService>{
+
+}
+```
+-------
+- Exception은 ControllerAdvice로 한곳에서 처리
+- @Valid로 발생되는 에러 형태와 Service에서 Throw 한 Exception의 규격을 통일하여 Front에서 한번에 처리할 수 있게 잡아둠
+```java
+@ControllerAdvice(basePackages = "com.cafe24.shoppingmall.controller.api")
+@RestController
+public class GlobalExceptionHandler {
+
+	private static final Log LOG = LogFactory.getLog( GlobalExceptionHandler.class );
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public Object processValidationError(MethodArgumentNotValidException ex) {
+		List<Map<String, String>> list = new ArrayList<Map<String,String>>();
+		ex.getBindingResult().getFieldErrors().forEach((e)-> {
+			Map<String, String> map = new HashMap<String, String>();
+			System.out.println(e.getField() + " : " + e.getDefaultMessage());
+			map.put("field", e.getField());
+			map.put("defaultMessage", e.getDefaultMessage());
+			list.add(map);
+		});
+		return JSONResult.fail(list);
+	}
+	
+	@ExceptionHandler(ValidCustomException.class)
+	public Object customValidationError(ValidCustomException ex) {
+		return JSONResult.fail(ex.getErrors());
+	}
+}
+```
+-------
+- Service 또한 제네릭으로 규격을 잡아둠
+- Controller와 다르게 추상클래스를 두지 않은 이유는 내부 로직이 동일하지 않기 때문
+```java
+public interface GenericService<T, K> {
+
+	public void insert(T vo);
+
+	public T read(K key);
+
+	public void update(T vo);
+
+	public void delete(K key);
+
+	public List<T> getList(Criteria cri);
+	
+	public int getTotal(Criteria cri);
+
+}
+```
+-----
+- 추가되는 메소드는 인터페이스를 중간에 두어 선언함
+- @Transactional 등이 프록시 패턴으로 만들어지므로 인터페이스 기반의 코드 설계
+```java
+public interface MemberService extends GenericService<MemberVO, Long> {
+	public void verifyDuplicateId(String id);
+	public MemberVO login(MemberVO vo);
+}
+```
+-----
+- Service 구현 클래스
+- 기본적인 CRUD는 같은 형태로 구현됨
+- Service 클래스는 상황에 따라 다른 Service 또는 Mapper를 주입 받아 프로세스를 진행
+- 모든 서비스과 같은 형태로 구성되어 있음
+```java
+@Service
+public class BaseMemberService implements MemberService{
+
+	@Autowired
+	private MemberMapper mapper;
+	
+	@Autowired
+	private BasketService basketService;
+	
+	@Override
+	public void insert(MemberVO vo) {
+		mapper.insert(vo);
+	}
+
+	@Override
+	public MemberVO read(Long key) {
+		return mapper.read(key);
+	}
+
+	@Override
+	public void update(MemberVO vo) {
+		mapper.update(vo);
+	}
+
+	@Override
+	public void delete(Long key) {
+		mapper.delete(key);
+	}
+
+	@Override
+	public List<MemberVO> getList(Criteria cri) {
+		return mapper.getList(cri);
+	}
+
+	@Override
+	public int getTotal(Criteria cri) {
+		return mapper.getTotal(cri);
+	}
+
+	@Override
+	public void verifyDuplicateId(String id) {
+		isValidCustomException(mapper.findById(id).isPresent(), ValidationMessage.ID_DUPLICATED, ValidationMessage.ID_FIELD);
+	}
+
+	/*
+	 * 	parameter : MemberVO(sessionId, id, password)
+	 *  sessionId를 가져오는 이유 : 장바구니 상품 추가 해주기 위해
+	 */
+	@Override
+	public MemberVO login(MemberVO vo) {
+		Optional<MemberVO> optionalMemberVO = mapper.findByIdAndPassword(vo);
+		
+		isValidCustomException(!optionalMemberVO.isPresent(), ValidationMessage.ID_PW_WRONG, ValidationMessage.ID_PW_FIELD);
+		// DB에서 회원 데이터를 가져옴
+		MemberVO memberVO = optionalMemberVO.get();
+		memberVO.setSessionId(vo.getSessionId());
+		isBasketExistedProduct(memberVO);
+		
+		return memberVO;
+	}
+
+	private void isValidCustomException(boolean check, String message, String field) {
+		if(check) {
+			throw new ValidCustomException(message, field);
+		}
+	}
+
+	private void isBasketExistedProduct(MemberVO vo) {
+		List<BasketVO> basketList = basketService.getList(new Criteria().setSessionId(vo.getSessionId()));
+		
+		if(!basketList.isEmpty()) {
+			basketList.forEach((basketVO)->{
+				basketVO.setMemberNo(vo.getMemberNo());
+				basketService.insert(basketVO);
+			});
+			basketService.deleteBasketsByMember(vo);
+		}
+	}
+	
+}
+
+```
+-----
+- Repository 영역 또한 위와 같은 흐름으로 구성됨
+- 관련 흐름은 Dao에서 Mapper로 변경하는 부분(3주차 Day4)참고바람
+-----
+- 마지막으로 VO는 Lombok을 활용하여 Getter,Setter 등의 반복 작업을 줄임
+- @NotBlank 등 유효성 검사 추가함
+- 
+```java
+@Data
+@NoArgsConstructor
+public class MemberVO {
+	
+	public MemberVO(String id, String memberName, String password, String email, String telephone, String gender, String zipcode,
+			String normalAddress, String extendAddress) {
+		this.id = id;
+		this.memberName = memberName;
+		this.password = password;
+		this.email = email;
+		this.telephone = telephone;
+		this.gender = gender;
+		this.zipcode = zipcode;
+		this.normalAddress = normalAddress;
+		this.extendAddress = extendAddress;
+	}
+	private Long memberNo;
+	@NotBlank(message = ValidationMessage.ID_BLANK)
+	private String id;
+	@NotBlank(message = ValidationMessage.MEMBER_NAME_BLANK)
+	private String memberName;
+	@Pattern(regexp = ValidationMessage.PASSWORD_REGEX, message = ValidationMessage.PASSWORD_PATTERN)
+	private String password;
+	@NotBlank(message = ValidationMessage.EMAIL_BLANK)
+    @Email(message = ValidationMessage.EAMAIL_PATTERN)
+	private String email;
+    @Pattern(regexp = ValidationMessage.TELEPHONE_REGEX, message = ValidationMessage.TELEPHONE_PATTERN)
+    private String telephone;
+    private String sessionId;
+    private String gender;
+	private Date regDate;
+	private String zipcode;
+	private String normalAddress;
+	private String extendAddress;
+	private List<BasketVO> basketList;
+	
+	public boolean isMember() {
+		return sessionId == null ? true : false;
+	}
+}
+```
+
+
+
+

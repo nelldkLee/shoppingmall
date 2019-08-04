@@ -7,8 +7,9 @@ import lombok.Data;
 
 @Data
 public class OrderVO {
-	private String orderNo;
-	private String memberNo;
+	private Long orderNo;
+	private Long memberNo;
+	private String sessionId;
 	private Enum<Progress> progress;
 	private	String receiveName;
 	private String zipcode;
@@ -24,5 +25,7 @@ public class OrderVO {
 		});
 		return totalPrice;
 	}
-	
+	public boolean isMember() {
+		return sessionId == null ? true : false;
+	}
 }

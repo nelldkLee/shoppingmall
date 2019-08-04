@@ -55,7 +55,7 @@ public class BaseMemberService implements MemberService{
 
 	@Override
 	public void verifyDuplicateId(String id) {
-		checkValidCustomException(mapper.findById(id).isPresent(), ValidationMessage.ID_DUPLICATED, ValidationMessage.ID_FIELD);
+		isValidCustomException(mapper.findById(id).isPresent(), ValidationMessage.ID_DUPLICATED, ValidationMessage.ID_FIELD);
 	}
 
 	/*
@@ -66,22 +66,22 @@ public class BaseMemberService implements MemberService{
 	public MemberVO login(MemberVO vo) {
 		Optional<MemberVO> optionalMemberVO = mapper.findByIdAndPassword(vo);
 		
-		checkValidCustomException(!optionalMemberVO.isPresent(), ValidationMessage.ID_PW_WRONG, ValidationMessage.ID_PW_FIELD);
+		isValidCustomException(!optionalMemberVO.isPresent(), ValidationMessage.ID_PW_WRONG, ValidationMessage.ID_PW_FIELD);
 		// DB에서 회원 데이터를 가져옴
 		MemberVO memberVO = optionalMemberVO.get();
 		memberVO.setSessionId(vo.getSessionId());
-		checkBasketAddedProduct(memberVO);
+		isBasketExistedProduct(memberVO);
 		
 		return memberVO;
 	}
 
-	private void checkValidCustomException(boolean check, String message, String field) {
+	private void isValidCustomException(boolean check, String message, String field) {
 		if(check) {
 			throw new ValidCustomException(message, field);
 		}
 	}
 
-	private void checkBasketAddedProduct(MemberVO vo) {
+	private void isBasketExistedProduct(MemberVO vo) {
 		List<BasketVO> basketList = basketService.getList(new Criteria().setSessionId(vo.getSessionId()));
 		
 		if(!basketList.isEmpty()) {
