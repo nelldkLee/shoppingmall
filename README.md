@@ -687,7 +687,7 @@ public class BaseMemberService implements MemberService{
 -----
 - 마지막으로 VO는 Lombok을 활용하여 Getter,Setter 등의 반복 작업을 줄임
 - @NotBlank 등 유효성 검사 추가함
-- 
+
 ```java
 @Data
 @NoArgsConstructor
@@ -713,12 +713,12 @@ public class MemberVO {
 	@Pattern(regexp = ValidationMessage.PASSWORD_REGEX, message = ValidationMessage.PASSWORD_PATTERN)
 	private String password;
 	@NotBlank(message = ValidationMessage.EMAIL_BLANK)
-    @Email(message = ValidationMessage.EAMAIL_PATTERN)
+        @Email(message = ValidationMessage.EAMAIL_PATTERN)
 	private String email;
-    @Pattern(regexp = ValidationMessage.TELEPHONE_REGEX, message = ValidationMessage.TELEPHONE_PATTERN)
-    private String telephone;
-    private String sessionId;
-    private String gender;
+        @Pattern(regexp = ValidationMessage.TELEPHONE_REGEX, message = ValidationMessage.TELEPHONE_PATTERN)
+        private String telephone;
+        private String sessionId;
+        private String gender;
 	private Date regDate;
 	private String zipcode;
 	private String normalAddress;
