@@ -3,6 +3,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="membervo" type="com.cafe24.shoppingmall.domain.MemberVO"/>
+		<typeAlias alias="guestvo" type="com.cafe24.shoppingmall.domain.GuestVO"/>
 		<typeAlias alias="categoryvo" type="com.cafe24.shoppingmall.domain.CategoryVO"/>
 		<typeAlias alias="productvo" type="com.cafe24.shoppingmall.domain.ProductVO"/>
 		<typeAlias alias="itemvo" type="com.cafe24.shoppingmall.domain.ItemVO"/>

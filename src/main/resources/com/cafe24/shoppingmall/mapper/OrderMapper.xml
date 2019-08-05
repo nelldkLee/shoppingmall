@@ -12,8 +12,7 @@
 					<if test="sessionId != null">
 					session_id, order_password
 					</if>
-					progress_state, sender_name, sender_zipcode, sender_telephone, sender_normal_address, sender_extend_address, 
-					receiver_name, receiver_zipcode, receiver_telephone, receiver_normal_address, receiver_extend_address, total_price, regdate) 
+					progress_state, receiver_name, receiver_zipcode, receiver_telephone, receiver_normal_address, receiver_extend_address, total_price, regdate) 
 			VALUES(
 					<if test="memberNo > 0">
 					#{memberNo},
@@ -21,8 +20,7 @@
 					<if test="sessionId != null">
 					#{sessionId}, #{orderPassword},  
 					</if>
-					#{progressState}, #{senderName}, #{senderZipcode}, #{senderTelephone}, #{senderNormalAddress}, #{senderExtendAddress},
-					#{receiverName}, #{receiverZipcode}, #{receiverTelephone}, #{receiverNormalAddress}, #{receiverExtendAddress}, #{totalPrice}, now())
+					#{progressState}, #{receiverName}, #{receiverZipcode}, #{receiverTelephone}, #{receiverNormalAddress}, #{receiverExtendAddress}, #{totalPrice}, now())
 			
 		<selectKey keyProperty="orderNo" resultType="long" order="AFTER">
 			select
@@ -41,8 +39,7 @@
 	
 	<select id="read" resultType="ordervo">
 		SELECT 
-			progress_state, sender_name, sender_zipcode, sender_telephone, sender_normal_address, sender_extend_address, 
-					receiver_name, receiver_zipcode, receiver_telephone, receiver_normal_address, receiver_extend_address, total_price, regdate 
+			progress_state progressState, receiver_name receiverName, receiver_zipcode receiverZipcode, receiver_telephone receiverTelephone, receiver_normal_address, receiver_extend_address receiverExtendAddress, total_price totalPrice, regdate 
 		FROM order WHERE order_no = #{orderNo} AND order_password = #{orderPassword}
 	</select>
 	
@@ -57,7 +54,7 @@
 	<!-- 완료. -->
 	<select id="getList" parameterType="criteria" resultType="ordervo">
 		SELECT 
-			order_no orderNo, progress_state progressState, receive_name receiveName, zipcode, normal_address normallAddress, extend_address extendAddress, total_price totalPrice, regdate 
+			order_no orderNo, progress_state progressState, receiver_name receiverName, receiver_zipcode receiverZipcode, receiver_telephone receiverTelephone, receiver_normal_address, receiver_extend_address receiverExtendAddress, total_price totalPrice, regdate  
 		FROM order 
 		<include refid="searchMember"/> 
 		ORDER BY order_no DESC LIMIT #{limitStart}, #{perPageSize}  

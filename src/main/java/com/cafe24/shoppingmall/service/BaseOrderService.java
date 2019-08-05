@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cafe24.shoppingmall.domain.Criteria;
 import com.cafe24.shoppingmall.domain.OrderVO;
 import com.cafe24.shoppingmall.mapper.BasketMapper;
+import com.cafe24.shoppingmall.mapper.MemberMapper;
 import com.cafe24.shoppingmall.mapper.OrderMapper;
 
 @Service
@@ -18,6 +19,8 @@ public class BaseOrderService implements OrderService {
 	private OrderMapper mapper;
 	@Autowired
 	private BasketMapper basketMapper;
+	@Autowired
+	private MemberMapper memberMapper;
 	
 	@Override
 	@Transactional
@@ -25,6 +28,7 @@ public class BaseOrderService implements OrderService {
 		mapper.insert(vo);
 		mapper.insertOrderItem(vo);
 		isBasketExistedProduct(vo);
+		isOrderByGuest(vo);
 	}
 
 	@Override
@@ -63,4 +67,9 @@ public class BaseOrderService implements OrderService {
 		});
 	}
 
+	private void isOrderByGuest(OrderVO vo) {
+		if(!vo.isMember() && vo.getGuestVO() != null) {
+			memberMapper.insertGuest(vo.getGuestVO());
+		}
+	}
 }

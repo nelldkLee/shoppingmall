@@ -12,6 +12,10 @@
 			last_insert_id()
 		</selectKey> 
 	</insert>
+	<insert id="insertGuest" parameterType="guestvo">
+		INSERT INTO guest(session_id, guest_name, telephone, regdate) 
+		VALUES(#{sessionId}, #{guestName}, #{telephone}, #{regDate})
+	</insert>
 	
 	<select id="read" resultType="membervo" parameterType="long">
 		SELECT 

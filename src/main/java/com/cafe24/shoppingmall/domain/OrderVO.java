@@ -13,12 +13,7 @@ public class OrderVO {
 	private String sessionId;
 	private String progress;
 	private String orderPassword;
-	
-	private	String senderName;
-	private	String senderTelephone;
-	private String senderZipcode;
-	private String senderNormalAddress;
-	private String senderExtendAddress;
+	private GuestVO guestVO;
 	
 	private	String receiverName;
 	private	String receiverTelephone;
