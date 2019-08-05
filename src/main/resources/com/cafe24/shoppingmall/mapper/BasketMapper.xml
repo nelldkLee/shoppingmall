@@ -11,8 +11,8 @@
 					<if test="memberNo > 0">
 						,member_no
 					</if>
-					<if test="guestSessionId != null">
-						,guest_session_id
+					<if test="sessionId != null">
+						,session_id
 					</if>
 					)
 					VALUES(#{itemNo},
@@ -20,8 +20,8 @@
 					<if test="memberNo > 0">
 						,#{memberNo}
 					</if>
-					<if test="guestSessionId != null">
-						,#{guestSessionId}
+					<if test="sessionId != null">
+						,#{sessionId}
 					</if>
 					)
 	</insert>

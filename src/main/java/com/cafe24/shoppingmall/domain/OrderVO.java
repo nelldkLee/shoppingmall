@@ -7,14 +7,25 @@ import lombok.Data;
 
 @Data
 public class OrderVO {
+	
 	private Long orderNo;
 	private Long memberNo;
 	private String sessionId;
-	private Enum<Progress> progress;
-	private	String receiveName;
-	private String zipcode;
-	private String normalAddress;
-	private String extendAddress;
+	private String progress;
+	private String orderPassword;
+	
+	private	String senderName;
+	private	String senderTelephone;
+	private String senderZipcode;
+	private String senderNormalAddress;
+	private String senderExtendAddress;
+	
+	private	String receiverName;
+	private	String receiverTelephone;
+	private String receiverZipcode;
+	private String receiverNormalAddress;
+	private String receiverExtendAddress;
+	
 	private int totalPrice;
 	private Date regdate;
 	private List<OrderItemVO> orderItemList;

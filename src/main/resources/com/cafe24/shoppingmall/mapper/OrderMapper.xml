@@ -5,8 +5,24 @@
 	
 	<!-- 완료 -->
 	<insert id="insert" parameterType="ordervo">
-		INSERT INTO order(progress_state, receive_name, zipcode, normal_address, extend_address, total_price, regdate) 
-			VALUES(#{progressState}, #{receiveName}, #{zipcode}, #{normalAddress}, #{extendAddress}, #{totalPrice}, now())
+		INSERT INTO order(
+					<if test="memberNo > 0">
+					member_no,
+					</if>
+					<if test="sessionId != null">
+					session_id, order_password
+					</if>
+					progress_state, sender_name, sender_zipcode, sender_telephone, sender_normal_address, sender_extend_address, 
+					receiver_name, receiver_zipcode, receiver_telephone, receiver_normal_address, receiver_extend_address, total_price, regdate) 
+			VALUES(
+					<if test="memberNo > 0">
+					#{memberNo},
+					</if>
+					<if test="sessionId != null">
+					#{sessionId}, #{orderPassword},  
+					</if>
+					#{progressState}, #{senderName}, #{senderZipcode}, #{senderTelephone}, #{senderNormalAddress}, #{senderExtendAddress},
+					#{receiverName}, #{receiverZipcode}, #{receiverTelephone}, #{receiverNormalAddress}, #{receiverExtendAddress}, #{totalPrice}, now())
 			
 		<selectKey keyProperty="orderNo" resultType="long" order="AFTER">
 			select
@@ -23,38 +39,42 @@
 	</insert>
 	
 	
-	<select id="read" resultType="ordervo" parameterType="long">
+	<select id="read" resultType="ordervo">
 		SELECT 
-			order_no orderNo, order_name orderName, description, price, display_active, selling_active, regdate 
-		FROM order WHERE order_no = #{no}
+			progress_state, sender_name, sender_zipcode, sender_telephone, sender_normal_address, sender_extend_address, 
+					receiver_name, receiver_zipcode, receiver_telephone, receiver_normal_address, receiver_extend_address, total_price, regdate 
+		FROM order WHERE order_no = #{orderNo} AND order_password = #{orderPassword}
 	</select>
 	
 	<update id="update" parameterType="ordervo">
-		UPDATE order 
-			SET order_name = #{orderName}, 
-				description = #{description},
-				price = #{price},
-				main_image_path = #{mainImagePath}, 
-				option_active = #{optionActive},
-				display_active = #{displayActive}, 
-				selling_active = #{sellingActive} 
-		WHERE order_no = #{orderNo}
+	
 	</update>
 	
 	<delete id="delete" parameterType="long">
 		DELETE from order WHERE order_no = #{no} 
 	</delete>
 	
-	<!-- 진행 해야함. -->
+	<!-- 완료. -->
 	<select id="getList" parameterType="criteria" resultType="ordervo">
 		SELECT 
-			category_no categoryNo, order_name orderName, description, price, display_active displayActivce, selling_active sellingActive, regdate 
+			order_no orderNo, progress_state progressState, receive_name receiveName, zipcode, normal_address normallAddress, extend_address extendAddress, total_price totalPrice, regdate 
 		FROM order 
+		<include refid="searchMember"/> 
 		ORDER BY order_no DESC LIMIT #{limitStart}, #{perPageSize}  
 	</select>
 	
 	<select id="getTotal" resultType="int">
 		SELECT count(*) from order
 	</select>
+	
+	<sql id="searchMember">
+		WHERE 1=1
+		<if test="sessionId != null">
+					AND	session_id = #{sessionId}
+		</if>
+		<if test="memberNo > 0">
+					AND	member_no = #{memberNo} 
+		</if> 
+	</sql>
 	
 </mapper>
