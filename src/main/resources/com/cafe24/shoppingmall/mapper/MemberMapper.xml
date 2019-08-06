@@ -4,9 +4,8 @@
 <mapper namespace="com.cafe24.shoppingmall.mapper.MemberMapper">
 	
 	<insert id="insert" parameterType="membervo">
-		INSERT INTO member(id, member_name, password, email, telephone, gender, zipcode, normal_address, extend_address) 
-			VALUES(#{id}, #{memberName},#{password}, #{email}, #{telephone}, #{gender}, #{zipcode}, #{normalAddress}, #{extendAddress})
-			
+		INSERT INTO member(id, member_name, password, email, telephone, gender, zipcode, normal_address, extend_address, regdate) 
+			VALUES(#{id}, #{memberName},#{password}, #{email}, #{telephone}, #{gender}, #{zipcode}, #{normalAddress}, #{extendAddress}, now() )
 		<selectKey keyProperty="no" resultType="long" order="AFTER">
 			select
 			last_insert_id()
@@ -14,7 +13,7 @@
 	</insert>
 	<insert id="insertGuest" parameterType="guestvo">
 		INSERT INTO guest(session_id, guest_name, telephone, regdate) 
-		VALUES(#{sessionId}, #{guestName}, #{telephone}, #{regDate})
+		VALUES(#{sessionId}, #{guestName}, #{telephone}, now())
 	</insert>
 	
 	<select id="read" resultType="membervo" parameterType="long">
