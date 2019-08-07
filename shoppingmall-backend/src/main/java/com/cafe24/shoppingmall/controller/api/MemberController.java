@@ -2,6 +2,7 @@ package com.cafe24.shoppingmall.controller.api;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +19,11 @@ public class MemberController extends AbstractRESTController<MemberVO, MemberSer
 	public JSONResult verifyDuplicateId(@PathVariable String id) {
 		service.verifyDuplicateId(id);
 		return JSONResult.success(null);
+	}
+	@PostMapping("/login")
+	public JSONResult login(MemberVO vo) {
+		service.login(vo);
+		return null;
 	}
 
 }

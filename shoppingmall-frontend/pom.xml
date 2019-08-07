@@ -9,6 +9,7 @@
 	</parent>
 	<artifactId>shoppingmall-frontend</artifactId>
 	<packaging>war</packaging>
+	
 	<dependencies>
 		<!-- common fileupload -->
 		<dependency>
@@ -32,5 +33,6 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.3.4</version>
 		</dependency>
+		
 	</dependencies>
 </project>

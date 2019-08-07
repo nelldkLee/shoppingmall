@@ -27,6 +27,11 @@ public class MemberController implements DefaultController{
 		return service.checkId(map);
 	}
 	
+	@PostMapping("/login")
+	public @ResponseBody Map<String, Object> login(HashMap<String, Object> map){
+		return service.findByIdAndPassword(map);
+	}
+	
 	@Override
 	public void list(HashMap<String, Object> map, Model model) throws Exception {
 	}

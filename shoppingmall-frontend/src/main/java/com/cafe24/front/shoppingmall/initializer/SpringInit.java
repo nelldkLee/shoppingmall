@@ -2,15 +2,15 @@ package com.cafe24.front.shoppingmall.initializer;
 
 import javax.servlet.Filter;
 
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import com.cafe24.front.shoppingmall.config.AppConfig;
 import com.cafe24.front.shoppingmall.config.WebConfig;
 
-public class SpringInit extends AbstractAnnotationConfigDispatcherServletInitializer{
 
-	
+public class SpringInit extends AbstractAnnotationConfigDispatcherServletInitializer{
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
