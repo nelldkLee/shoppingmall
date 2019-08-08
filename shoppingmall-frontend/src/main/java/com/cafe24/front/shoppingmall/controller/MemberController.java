@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,9 +27,14 @@ public class MemberController implements DefaultController{
 	public @ResponseBody Map<String, Object> checkId(@RequestParam HashMap<String, Object> map) {
 		return service.checkId(map);
 	}
+	@GetMapping("/login")
+	public void login() {
+		
+	}
 	
 	@PostMapping("/login")
-	public @ResponseBody Map<String, Object> login(HashMap<String, Object> map){
+	public @ResponseBody Map<String, Object> login(@RequestBody HashMap<String, Object> map){
+		System.out.println(map);
 		return service.findByIdAndPassword(map);
 	}
 	

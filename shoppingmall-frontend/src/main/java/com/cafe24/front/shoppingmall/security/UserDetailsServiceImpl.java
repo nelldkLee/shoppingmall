@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 
 
@@ -14,15 +14,13 @@ import org.springframework.stereotype.Component;
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired
-	private OAuth2RestTemplate restTemplate;
+	private RestTemplate restTemplate;
 	private String apiUrl = "";
 	
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		//MemberVO memberVO = restTemplate.getForObject(url, responseType, uriVariables)
-		
-		SecurityUser securityUser = new SecurityUser();
+		SecurityUser securityUser = restTemplate.getForObject(apiUrl, SecurityUser.class, email);
 		
 		/*
 		 * if(userVo != null) { securityUser.setNo(userVo.getNo());

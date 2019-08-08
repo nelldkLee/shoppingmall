@@ -3,7 +3,9 @@ package com.cafe24.shoppingmall.controller.api;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.shoppingmall.controller.AbstractRESTController;
@@ -21,7 +23,9 @@ public class MemberController extends AbstractRESTController<MemberVO, MemberSer
 		return JSONResult.success(null);
 	}
 	@PostMapping("/login")
-	public JSONResult login(MemberVO vo) {
+	public JSONResult login(@RequestBody MemberVO vo) {
+		System.out.println("!!!!!!");
+		System.out.println(vo);
 		service.login(vo);
 		return null;
 	}

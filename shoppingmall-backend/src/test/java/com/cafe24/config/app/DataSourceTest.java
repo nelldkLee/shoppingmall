@@ -13,6 +13,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.cafe24.shoppingmall.config.TestAppConfig;
 import com.cafe24.shoppingmall.config.WebConfig;
+import com.cafe24.shoppingmall.config.app.DBConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DBConfig.class})
