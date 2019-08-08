@@ -36,17 +36,17 @@
 						<div class="col-xl-6 col-lg-6 col-md-12">
 							<form action="" class="tm-edit-product-form">
 								<div class="form-group mb-3">
-									<label for="productName">Product Name </label>
-									<input id="product_name" name="productName" type="text"
+									<label for="productName">상품이름</label> <input
+										id="product_name" name="productName" type="text"
 										class="form-control validate" required />
 								</div>
 								<div class="form-group mb-3">
-									<label for="description">Description</label>
+									<label for="description">상세설명</label>
 									<textarea class="form-control validate" rows="3" required></textarea>
 								</div>
 								<div class="form-group mb-3">
-									<label for="category">Category</label> <select
-										class="custom-select tm-select-accounts" id="category">
+									<label for="category">카테고리</label> <select
+										class="custom-select tm-select-accounts" id="category" name="category">
 										<option selected>Select category</option>
 										<option value="1">New Arrival</option>
 										<option value="2">Most Popular</option>
@@ -55,16 +55,40 @@
 								</div>
 								<div class="row">
 									<div class="form-group mb-3 col-xs-12 col-sm-6">
-										<label for="expire_date">Expire
-											Date </label> <input id="expire_date" name="expire_date" type="text"
-											class="form-control validate" data-large-mode="true" />
+										<label for="expire_date">가격 </label> 
+										<input id="expire_date" name="price" type="text"
+											class="form-control validate" data-large-mode="true"/>
 									</div>
 									<div class="form-group mb-3 col-xs-12 col-sm-6">
-										<label for="stock">Units
-											In Stock </label> <input id="stock" name="stock" type="text"
-											class="form-control validate" required />
+										<label for="stock">상품옵션</label>
+										<div class="btn-group w-100" role="group" id="option_active">
+											<button type="button" class="btn btn-default pl-0 pr-0 w-50" data-active="true">On</button>
+											<button type="button" class="btn btn-default pl-0 pr-0 w-50" data-active="false">Off</button>
+										</div>
 									</div>
 								</div>
+								<div class="row" >
+									<div class="form-group mb-3 col-xs-12 col-sm-3">
+										<label for="expire_date">옵션 </label> <input
+											id="expire_date" name="expire_date" type="text"
+											class="form-control validate" data-large-mode="true" />
+									</div>
+									<div class="form-group mb-3 col-xs-10 col-sm-6">
+										<label for="expire_date">내용(콤마로구분)</label> <input
+											id="expire_date" name="expire_date" type="text"
+											class="form-control validate" data-large-mode="true" />
+									</div>
+									
+									<div class="form-group mb-3 col-xs-12 col-sm-3">
+										<label for="expire_date">&nbsp;</label>
+											<button type="button" class="btn btn-default pl-0 pr-0 w-100">Add</button>
+									</div>
+								</div>
+								<div class="col-12 mb-3 w-100 pl-0 pr-0">
+								<button type="submit"
+									class="btn btn-primary btn-block text-uppercase">Generate</button>
+								</div>
+								
 						</div>
 						<div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
 							<div class="tm-product-img-dummy mx-auto">
@@ -79,8 +103,7 @@
 							</div>
 						</div>
 						<div class="col-12">
-							<button type="submit"
-								class="btn btn-primary btn-block text-uppercase">Add
+							<button type="submit" class="btn btn-primary btn-block text-uppercase" id="">Add
 								Product Now</button>
 						</div>
 						</form>
@@ -91,9 +114,16 @@
 	</div>
 	<c:import url="/WEB-INF/views/includes/admin-footer.jsp" />
 	<script>
-		$(function() {
-			$("#expire_date").datepicker();
+	$(function() {
+		var active = '#9c9997';
+		
+		$(window).resize(function() {
+			updateLineChart();
+			updateBarChart();
 		});
+		
+	});
+	
 	</script>
 </body>
 </html>

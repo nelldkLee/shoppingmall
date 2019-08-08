@@ -34,7 +34,7 @@
                     <th scope="col">IN STOCK</th>
                     <th scope="col">EXPIRE DATE</th>
                     <th scope="col">&nbsp;</th>
-                  </tr>
+                  </tr>	
                 </thead>
                 <tbody>
                   <tr>

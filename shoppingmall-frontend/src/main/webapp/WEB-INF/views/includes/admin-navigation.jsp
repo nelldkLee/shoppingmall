@@ -35,7 +35,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.servletContext.contextPath }/admin/registerProduct">
+                            <a class="nav-link" href="${pageContext.servletContext.contextPath }/admin/products">
                                 <i class="fas fa-shopping-cart"></i>
                                 Products
                             </a>
