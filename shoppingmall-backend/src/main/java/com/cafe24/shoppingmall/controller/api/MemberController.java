@@ -26,8 +26,7 @@ public class MemberController extends AbstractRESTController<MemberVO, MemberSer
 	public JSONResult login(@RequestBody MemberVO vo) {
 		System.out.println("!!!!!!");
 		System.out.println(vo);
-		service.login(vo);
-		return null;
+		return JSONResult.success(service.login(vo));
 	}
 
 }

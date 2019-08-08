@@ -24,18 +24,12 @@ public class MemberController implements DefaultController{
 	public MemberService service;
 	
 	@GetMapping("/checkId")
-	public @ResponseBody Map<String, Object> checkId(@RequestParam HashMap<String, Object> map) {
+	public @ResponseBody Map<String, Object> checkId(@RequestParam Map<String, String> map) {
 		return service.checkId(map);
 	}
 	@GetMapping("/login")
 	public void login() {
-		
-	}
-	
-	@PostMapping("/login")
-	public @ResponseBody Map<String, Object> login(@RequestBody HashMap<String, Object> map){
-		System.out.println(map);
-		return service.findByIdAndPassword(map);
+		System.out.println("login 페이지 호출");
 	}
 	
 	@Override

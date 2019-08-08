@@ -19,8 +19,6 @@ public class MemberVO {
 	private String zipcode;
 	private String normalAddress;
 	private String extendAddress;
+	private String role;
 	
-	public boolean isMember() {
-		return sessionId == null ? true : false;
-	}
 }

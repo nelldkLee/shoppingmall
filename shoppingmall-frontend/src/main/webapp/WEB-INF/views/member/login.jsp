@@ -90,7 +90,7 @@
 		//console.log( JSON.stringify(vo) );
 		
 		$.ajax({
-			url: "${pageContext.request.contextPath }/member/login",
+			url: "${pageContext.request.contextPath }/member/auth",
 			type: "post",
 			contentType: "application/json", //post 방식으로  JSON Type으로 데이터를 보낼 때
 			dataType: "json",
