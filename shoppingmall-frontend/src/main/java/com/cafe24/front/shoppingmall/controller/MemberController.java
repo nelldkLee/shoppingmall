@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cafe24.front.shoppingmall.domain.MemberVO;
 import com.cafe24.front.shoppingmall.service.MemberService;
 
 @RequestMapping("/member")
@@ -29,9 +30,13 @@ public class MemberController implements DefaultController{
 	}
 	@GetMapping("/login")
 	public void login() {
-		System.out.println("login 페이지 호출");
+		System.out.println("login page call");
 	}
-	
+	@PostMapping("/auth")
+	public String loinPost(@RequestBody Map<String, String> map) {
+		System.out.println(service.findByIdAndPassword(map));
+		return null;
+	}
 	@Override
 	public void list(HashMap<String, Object> map, Model model) throws Exception {
 	}

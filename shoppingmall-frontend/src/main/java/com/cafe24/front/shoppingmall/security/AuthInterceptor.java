@@ -45,13 +45,13 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		
 		if(session == null) { //인증이 안 되어 있음
-			response.sendRedirect(request.getContextPath() + "/user/login" );
+			response.sendRedirect(request.getContextPath() + "/member/login" );
 			return false;
 		}
 
 		MemberVO authUser = (MemberVO)session.getAttribute("authUser");
 		if(authUser == null) { //인증이 안 되어 있음
-			response.sendRedirect(request.getContextPath() + "/user/login" );
+			response.sendRedirect(request.getContextPath() + "/member/login" );
 			return false;
 		}
 		

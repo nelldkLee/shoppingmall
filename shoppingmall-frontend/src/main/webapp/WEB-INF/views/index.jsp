@@ -27,7 +27,7 @@
   <body>
   
   <div class="site-wrap">
-    <c:import url="/WEB-INF/views/includes/header.jsp" />
+    <c:import url="/WEB-INF/views/includes/navigation.jsp" />
     <div class="site-blocks-cover" style="background-image: url(${pageContext.servletContext.contextPath }/assets/home/images/hero_1.jpg);" data-aos="fade">
       <div class="container">
         <div class="row align-items-start align-items-md-center justify-content-end">

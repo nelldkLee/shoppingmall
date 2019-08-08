@@ -6,25 +6,17 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<title>Cafe24 &mdash; Colorlib e-Commerce Template</title>
+<title>Cafe24 &mdash; Colorlib e-Commerce</title>
 <meta charset="utf-8">
 <meta name="viewport"	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="stylesheet"	href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
-<link rel="stylesheet"	href="${pageContext.servletContext.contextPath }/assets/home/fonts/icomoon/style.css">
-<link rel="stylesheet"	href="${pageContext.servletContext.contextPath }/assets/home/css/bootstrap.min.css">
-<link rel="stylesheet"	href="${pageContext.servletContext.contextPath }/assets/home/css/magnific-popup.css">
-<link rel="stylesheet"	href="${pageContext.servletContext.contextPath }/assets/home/css/jquery-ui.css">
-<link rel="stylesheet"	href="${pageContext.servletContext.contextPath }/assets/home/css/owl.carousel.min.css">
-<link rel="stylesheet"	href="${pageContext.servletContext.contextPath }/assets/home/css/owl.theme.default.min.css">
-<link rel="stylesheet"	href="${pageContext.servletContext.contextPath }/assets/home/css/aos.css">
-<link rel="stylesheet"	href="${pageContext.servletContext.contextPath }/assets/home/css/style.css">
+<c:import url="/WEB-INF/views/home/includes/header.jsp" />
 
 </head>
 <body>
 
 	<div class="site-wrap">
-		<c:import url="/WEB-INF/views/includes/header.jsp" />
+		<c:import url="/WEB-INF/views/home/includes/navigation.jsp" />
 		<div class="bg-light py-3">
 			<div class="container">
 				<div class="row">
@@ -43,7 +35,7 @@
 					<div class="col-md-6 mb-5 mb-md-0 text-center">
 						<h2 class="h3 mb-3 text-black">Login</h2>
 						<div class="p-3 p-lg-5 border">
-							<form id="login-form" method="post" >
+							<form id="login-form" method="post" action="${pageContext.request.contextPath }/member/auth" >
 								<div class="form-group row">
 									<div class="col-md-12">
 										<input type="text" class="form-control" id="input-id" name="id">
@@ -56,7 +48,7 @@
 								</div>
 								<div class="form-group row">
 									<div class="col-md-12">
-										<input type="submit" class="btn btn-sm btn-primary" id="login" value="logIn">
+										<input type="submit" class="btn btn-sm btn-primary" id="login" value="LogIn">
 									</div>
 								</div>
 							</form>
@@ -76,7 +68,7 @@
 		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
 	<script>
-	$("#login-form").submit(function(event){
+	$("#join-form").submit(function(event){
 		// submit event 기본 동작을 막음
 		// posting을 막음
 		event.preventDefault();
