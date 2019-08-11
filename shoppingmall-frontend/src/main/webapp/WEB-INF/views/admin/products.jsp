@@ -29,27 +29,31 @@
                 <thead>
                   <tr>
                     <th scope="col">&nbsp;</th>
-                    <th scope="col">PRODUCT NAME</th>
-                    <th scope="col">UNIT SOLD</th>
-                    <th scope="col">IN STOCK</th>
-                    <th scope="col">EXPIRE DATE</th>
+                    <th scope="col">상품명</th>
+                    <th scope="col">판매가</th>
+                    <th scope="col">판매상태</th>
+                    <th scope="col">카테고리</th>
+                    <th scope="col">상품 등록일</th>
                     <th scope="col">&nbsp;</th>
                   </tr>	
                 </thead>
+                
                 <tbody>
+                <c:forEach items="${productList}" var="vo" varStatus="status">	
                   <tr>
                     <th scope="row"><input type="checkbox" /></th>
-                    <td class="tm-product-name">Lorem Ipsum Product 1</td>
-                    <td>1,450</td>
-                    <td>550</td>
-                    <td>28 March 2019</td>
+                    <td class="tm-product-name">${vo.productName}</td>
+                    <td>${vo.price}</td>
+                    <td>${vo.displayActive}</td>
+                    <td>상의</td>
+                    <td>${vo.regdate}</td>
                     <td>
                       <a href="#" class="tm-product-delete-link">
                         <i class="far fa-trash-alt tm-product-delete-icon"></i>
                       </a>
                     </td>
                   </tr>
-                  
+                  </c:forEach>
                 </tbody>
               </table>
             </div>
@@ -70,14 +74,29 @@
               <table class="table tm-table-small tm-product-table">
                 <tbody>
                   <tr>
-                    <td class="tm-product-name">Product Category 1</td>
+                    <td class="tm-product-name">상의</td>
                     <td class="text-center">
                       <a href="#" class="tm-product-delete-link">
                         <i class="far fa-trash-alt tm-product-delete-icon"></i>
                       </a>
                     </td>
                   </tr>
-                  
+                  <tr>
+                    <td class="tm-product-name">하의</td>
+                    <td class="text-center">
+                      <a href="#" class="tm-product-delete-link">
+                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="tm-product-name">악세사리</td>
+                    <td class="text-center">
+                      <a href="#" class="tm-product-delete-link">
+                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                      </a>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>

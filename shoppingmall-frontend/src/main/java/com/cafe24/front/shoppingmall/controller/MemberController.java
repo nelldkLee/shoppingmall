@@ -32,6 +32,19 @@ public class MemberController implements DefaultController{
 	public void login() {
 		System.out.println("login page call");
 	}
+	
+	@GetMapping("/join")
+	public void join() {
+		System.out.println("join page call");
+	}
+	
+	@PostMapping("/join")
+	public void joinPost(Map<String, String> map) {
+		service.join(map);
+	}
+	
+	
+	
 	@PostMapping("/auth")
 	public String loinPost(@RequestBody Map<String, String> map) {
 		System.out.println(service.findByIdAndPassword(map));

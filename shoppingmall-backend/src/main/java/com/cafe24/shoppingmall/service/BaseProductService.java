@@ -74,8 +74,9 @@ public class BaseProductService implements ProductService{
 	}
 
 	private void checkImage(ProductVO vo) {
-		if(vo.getImageList().size() > 0) {
+		if(vo.getImageList() != null && vo.getImageList().size() > 0) {
 			imageService.insertImageList(vo);
+			
 		}
 	}
 

@@ -168,6 +168,13 @@
             <artifactId>spring-security-web</artifactId>
             <version>${org.springsecurity-version}</version>
         </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/jstl/jstl -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>

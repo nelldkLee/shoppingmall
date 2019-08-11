@@ -1,5 +1,6 @@
 package com.cafe24.shoppingmall.domain;
 
+import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -18,4 +19,5 @@ public class ProductVO {
 	private List<CategoryVO> categoryList;
 	private List<ItemVO> itemList;
 	private List<ImageVO> imageList;
+	private Date regdate;
 }

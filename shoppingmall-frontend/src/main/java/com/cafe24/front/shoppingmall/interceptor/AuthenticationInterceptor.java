@@ -38,7 +38,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 		if(authUser != null) {
 			return true;
 		}
-		response.sendRedirect(request.getContextPath() + "/member/login");
+		response.sendRedirect(request.getContextPath() + "/admin/login");
 		return false;
 	}
 }

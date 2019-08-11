@@ -10,13 +10,13 @@
 <meta charset="utf-8">
 <meta name="viewport"	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<c:import url="/WEB-INF/views/home/includes/header.jsp" />
+<c:import url="/WEB-INF/views/includes/header.jsp" />
 
 </head>
 <body>
 
 	<div class="site-wrap">
-		<c:import url="/WEB-INF/views/home/includes/navigation.jsp" />
+		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
 		<div class="bg-light py-3">
 			<div class="container">
 				<div class="row">
@@ -91,6 +91,9 @@
 				if(response.result != "success"){
 					console.error(reponse.message);
 					return;
+				}
+				if(response.result == "success"){
+					location.href = "${pageContext.request.contextPath }";
 				}
 			},
 			error: function(jqXHR, status, e){

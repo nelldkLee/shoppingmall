@@ -16,14 +16,14 @@
 				<div
 					class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
 					<div class="site-logo">
-						<a href="index.html" class="js-logo-clone">Shoppers</a>
+						<a href="${pageContext.servletContext.contextPath }index.jsp" class="js-logo-clone">Shoppers</a>
 					</div>
 				</div>
 
 				<div class="col-6 col-md-4 order-3 order-md-3 text-right">
 					<div class="site-top-icons">
 						<ul>
-							<li><a href="#"><span class="icon icon-person"></span></a></li>
+							<li><a href="${pageContext.servletContext.contextPath }/member/login"><span class="icon icon-person"></span></a></li>
 							<li><a href="#"><span class="icon icon-heart-o"></span></a></li>
 							<li><a href="cart.html" class="site-cart"> <span
 									class="icon icon-shopping_cart"></span> <span class="count">2</span>
@@ -63,7 +63,7 @@
 				<li><a href="shop.html">Shop</a></li>
 				<li><a href="#">Catalogue</a></li>
 				<li><a href="#">New Arrivals</a></li>
-				<li><a href="contact.html">Contact</a></li>
+				<li><a href="${pageContext.servletContext.contextPath }/member/join">Contact</a></li>
 			</ul>
 		</div>
 	</nav>

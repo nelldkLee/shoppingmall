@@ -20,16 +20,22 @@ public class MemberService {
 	
 	public Map<String, Object> checkId(Map<String, String> map) {
 		
-		String endpoint = "http://localhost:8080/shoppingmall-backend/api/member/checkId/"+ map.get("id");
+		String endpoint = "http://localhost:9080/shoppingmall-backend/api/member/checkId/"+ map.get("id");
 		HashMap<String, Object> resultMap = restTemplate.getForObject(endpoint, HashMap.class);
 		System.out.println(resultMap);
 		return resultMap;
 	};
 	public MemberVO findByIdAndPassword(Map<String, String> map) {
-		String endpoint = "http://localhost:8080/shoppingmall-backend/api/member/login";
+		String endpoint = "http://localhost:9080/shoppingmall-backend/api/member/login";
 		JSONResultMemberVO jsonResultMap = restTemplate.postForObject(endpoint, map, JSONResultMemberVO.class);
 		System.out.println(jsonResultMap.getData());
 		return jsonResultMap.getData();
+	}
+	public Map<String, Object> join(Map<String, String> map) {
+		String endpoint = "http://localhost:9080/shoppingmall-backend/api/member/join";
+		HashMap<String, Object> resultMap = restTemplate.postForObject(endpoint, map, HashMap.class);
+		
+		return resultMap;
 	}
 
 	/*
@@ -44,4 +50,6 @@ public class MemberService {
 	 */
 	private static class JSONResultMemberVO extends JSONResult<MemberVO> {
 	}
+
+	
 }

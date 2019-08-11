@@ -1,0 +1,11 @@
+#option_template {
+	display: none;
+}
+
+#option_active_group button{
+	background-color: #9c9997;
+}
+
+#option_active_group button.selected{
+	background-color:#DDDDDD;
+}
