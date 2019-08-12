@@ -97,15 +97,13 @@
 								
 						</div>
 						<div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
-							<div class="tm-product-img-dummy mx-auto">
+							<div class="tm-product-img-dummy mx-auto" id="mainImageThumbnail">
 								<i class="fas fa-cloud-upload-alt tm-upload-icon"
 									onclick="document.getElementById('fileInput').click();"></i>
 							</div>
 							<div class="custom-file mt-3 mb-3">
-								<input id="fileInput" type="file" style="display: none;" /> <input
-									type="button" class="btn btn-primary btn-block mx-auto"
-									value="UPLOAD PRODUCT IMAGE"
-									onclick="document.getElementById('fileInput').click();" />
+								<input id="fileInput" type="file" style="display: none;" name="mainImage"/>
+								<input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE" onclick="document.getElementById('fileInput').click();" />
 							</div>
 						</div>
 						<div class="col-12">
@@ -233,6 +231,7 @@
 			console.log('price' + price);
 			var optionActive= $('#option_active').find('.selected').data('active');
 			console.log('optionActive' + optionActive);
+			var mainImagePath = $('input[name="mainImagePath"]').val();
 			var itemList = [];
 			$('.item_option').each(function(){
 				var itemObj = {};
@@ -261,7 +260,8 @@
 					categoryList,
 					price,
 					optionActive,
-					itemList
+					itemList,
+					mainImagePath
 			};
 			console.log(JSON.stringify(obj));
 			$.ajax({
@@ -289,6 +289,42 @@
 		})
 		
 	});
+	
+	$('#fileInput').change(function(e){
+		console.log(e);
+		event.preventDefault();
+		 
+        var form = $('#fileInput')[0];
+        var data = new FormData();
+        data.append('mainImage', $("#fileInput")[0].files[0]);
+ 
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "${pageContext.request.contextPath }/upload",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (result) {
+                alert("complete");
+                console.log(result);
+                renderImage(result['data']);
+            },
+            error: function (e) {
+                console.log("ERROR : ", e);
+                alert("fail");
+            }
+        });
+	});
+	
+	function renderImage(url){
+		$('#mainImageThumbnail').empty();
+		$('#mainImageThumbnail').append('<img class="w-100 h-100"src="${pageContext.request.contextPath }' + url +'">');
+		$('#mainImageThumbnail').append('<input type="hidden" name="mainImagePath" value="' + url + '">');
+		
+	}
 	
 	</script>
 </body>

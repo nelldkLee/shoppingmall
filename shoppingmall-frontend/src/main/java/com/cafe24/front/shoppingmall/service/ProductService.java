@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.cafe24.front.shoppingmall.domain.Criteria;
 import com.cafe24.front.shoppingmall.dto.JSONResult;
 
 @Service
@@ -22,13 +23,23 @@ public class ProductService {
 		return resultMap;
 	}
 	
-	public List<Map<String, Object>> getList(){
-		String endpoint = "http://localhost:9080/shoppingmall-backend/api/product";
+	public List<Map<String, Object>> getList(Criteria cri){
+		String endpoint = "http://localhost:9080/shoppingmall-backend/api/product" + cri.makeURL();
 		JSONResultListHashMap resultMap =  restTemplate.getForObject(endpoint, JSONResultListHashMap.class);
 		System.out.println(resultMap);
 		return resultMap.getData();
 	}
 	
+	public Map<String, Object> view(Criteria cri){
+		String endpoint = "http://localhost:9080/shoppingmall-backend/api/product/"+cri.getProductNo();
+		JSONResultHashMap resultMap =  restTemplate.getForObject(endpoint, JSONResultHashMap.class);
+		System.out.println(resultMap);
+		return resultMap.getData();
+	}
+	
+	
 	private static class JSONResultListHashMap extends JSONResult<List<Map<String, Object>>> {
+	}
+	private static class JSONResultHashMap extends JSONResult<Map<String, Object>> {
 	}
 }

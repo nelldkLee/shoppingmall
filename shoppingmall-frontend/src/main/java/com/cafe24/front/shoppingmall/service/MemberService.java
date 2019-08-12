@@ -9,8 +9,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.cafe24.front.shoppingmall.domain.MemberVO;
 import com.cafe24.front.shoppingmall.dto.JSONResult;
-import com.cafe24.front.shoppingmall.dto.MapUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class MemberService {
@@ -50,6 +48,4 @@ public class MemberService {
 	 */
 	private static class JSONResultMemberVO extends JSONResult<MemberVO> {
 	}
-
-	
 }

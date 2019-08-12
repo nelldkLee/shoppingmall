@@ -35,6 +35,6 @@ public class Criteria {
 	}
 
 	public boolean isMember() {
-		return memberNo > 0 ? true:false;
+		return memberNo != null ? true:false;
 	}
 }

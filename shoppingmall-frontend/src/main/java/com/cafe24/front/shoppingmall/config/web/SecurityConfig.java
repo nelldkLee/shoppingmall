@@ -59,6 +59,7 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
 		registry
 		.addInterceptor(authInterceptor())
 		.addPathPatterns("/**")
+		.excludePathPatterns("/upload")
 		.excludePathPatterns("/member/auth")
 		.excludePathPatterns("/member/logout")
 		.excludePathPatterns("/assets/**");

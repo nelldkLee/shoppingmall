@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cafe24.front.shoppingmall.domain.Criteria;
 import com.cafe24.front.shoppingmall.service.ProductService;
 
 @RequestMapping("/admin")
@@ -21,10 +22,10 @@ public class AdminController {
 	private ProductService productService;
 	
 	@GetMapping("/products")
-	public void viewProducts(Model model) {
+	public void viewProducts(Model model,Criteria cri) {
 		
 		System.out.println("products call");
-		model.addAttribute("productList",productService.getList());
+		model.addAttribute("productList",productService.getList(cri));
 	}
 	@GetMapping("/registerProduct")
 	public void addProductPage() {

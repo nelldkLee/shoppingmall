@@ -5,8 +5,8 @@
 	
 	<!-- 완료 -->
 	<insert id="insert" parameterType="productvo">
-		INSERT INTO product(product_name, description, price, display_active, selling_active, option_active, regdate) 
-			VALUES(#{productName}, #{description}, #{price}, #{displayActive}, #{sellingActive}, #{optionActive}, now())
+		INSERT INTO product(product_name, description, price, main_image_path, display_active, selling_active, option_active, regdate) 
+			VALUES(#{productName}, #{description}, #{price}, #{mainImagePath}, #{displayActive}, #{sellingActive}, #{optionActive}, now())
 			
 		<selectKey keyProperty="productNo" resultType="long" order="AFTER">
 			select
@@ -22,11 +22,41 @@
 			</foreach>
 	</insert>
 	
+	<resultMap type="com.cafe24.shoppingmall.domain.OptionVO" id="optionMap">
+		<result property="itemNo" column="itemNo" />
+		<result property="optionName" column="optionName" />
+		<result property="optionValue" column="optionValue" />
+	</resultMap>
 	
-	<select id="read" resultType="productvo" parameterType="long">
-		SELECT 
-			product_no productNo, product_name productName, description, price, display_active, selling_active, regdate 
-		FROM product WHERE product_no = #{no}
+	
+	<resultMap type="com.cafe24.shoppingmall.domain.ItemVO" id="itemMap">
+		<id property="itemNo" column="itemNo" />
+		<result property="stock" column="stock" />
+		<collection property="optionList" resultMap="optionMap" />
+	</resultMap>
+	
+	
+	<resultMap type="com.cafe24.shoppingmall.domain.ProductVO" id="productMap">
+		<id property="productNo" column="productNo" />
+		<result property="productName" column="productName" />
+		<result property="description" column="description" />
+		<result property="price" column="price" />
+		<result property="mainImagePath" column="mainImagePath" />
+		<result property="displayActive" column="displayActive" />
+		<result property="sellingActive" column="sellingActive" />
+		<result property="regdate" column="regdate" />
+		<collection property="itemList" resultMap="itemMap" />
+	</resultMap>
+	
+	
+	
+	<select id="read" resultMap="productMap" parameterType="long">
+		SELECT 	p.product_no productNo, product_name productName, main_image_path mainImagePath, description, price, display_active displayActive, selling_active sellingActive, 
+				regdate, i.stock stock, i.item_no itemNo, o.option_name optionName, o.option_value optionValue  
+			FROM product p, item i, shoppingmall.`option` o
+		WHERE 	p.product_no = i.product_no and 
+				i.item_no = o.item_no and
+				p.product_no = #{no}
 	</select>
 	
 	<update id="update" parameterType="productvo">
@@ -48,7 +78,7 @@
 	<!-- 진행 해야함. -->
 	<select id="getList" parameterType="criteria" resultType="productvo">
 		SELECT 
-			product_no productNo, product_name productName, description, price, display_active displayActivce, selling_active sellingActive, regdate  
+			product_no productNo, product_name productName, description, main_image_path mainImagePath, price, display_active displayActivce, selling_active sellingActive, regdate  
 		FROM product 
 		ORDER BY product_no DESC LIMIT #{limitStart}, #{perPageSize}  
 	</select>

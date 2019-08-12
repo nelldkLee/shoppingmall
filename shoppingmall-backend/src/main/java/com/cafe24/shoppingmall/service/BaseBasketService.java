@@ -20,7 +20,13 @@ public class BaseBasketService implements BasketService{
 	public void insert(BasketVO vo) {
 		isDuplicatedProduct(vo, new Criteria().setItemNo(vo.getItemNo()));
 	}
-
+	
+	@Override
+	public void insertList(List<BasketVO> basketList) {
+		basketList.forEach((basketVO)->{
+			insert(basketVO);
+		});
+	}
 	@Override
 	public BasketVO read(Long key) {
 		return mapper.read(key);
