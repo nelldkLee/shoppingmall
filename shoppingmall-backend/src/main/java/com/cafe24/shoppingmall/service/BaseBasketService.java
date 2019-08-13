@@ -18,7 +18,7 @@ public class BaseBasketService implements BasketService{
 	
 	@Override
 	public void insert(BasketVO vo) {
-		isDuplicatedProduct(vo, new Criteria().setItemNo(vo.getItemNo()));
+		isDuplicatedProduct(vo);
 	}
 	
 	@Override
@@ -53,7 +53,15 @@ public class BaseBasketService implements BasketService{
 	}
 	
 	@Override
-	public void isDuplicatedProduct(BasketVO vo, Criteria cri) {
+	public void isDuplicatedProduct(BasketVO vo) {
+		Criteria cri = new Criteria();
+		cri.setItemNo(vo.getItemNo());
+
+		if(vo.getMemberNo() != null) {
+			cri.setMemberNo(vo.getMemberNo());
+		}else {
+			cri.setSessionId(vo.getSessionId());
+		}
 		List<BasketVO> list =  mapper.getList(cri);
 		// 기존에 장바구니에 같은 상품 담겨있을 시 수량 더해주기.
 		if(list.size() > 0) {
@@ -78,5 +86,4 @@ public class BaseBasketService implements BasketService{
 	public void deleteBasketByItemNo(Long itemNo) {
 		mapper.deleteByItemNo(itemNo);
 	}
-	
 }

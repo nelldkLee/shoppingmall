@@ -12,6 +12,7 @@ import com.cafe24.front.shoppingmall.security.AuthInterceptor;
 import com.cafe24.front.shoppingmall.security.AuthLoginInterceptor;
 import com.cafe24.front.shoppingmall.security.AuthLogoutInterceptor;
 import com.cafe24.front.shoppingmall.security.AuthUserHandlerMethodArgumentResolver;
+import com.cafe24.front.shoppingmall.security.GuestInterceptor;
 
 @Configuration
 public class SecurityConfig extends WebMvcConfigurerAdapter {
@@ -42,6 +43,10 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
 	public AuthInterceptor authInterceptor() {
 		return new AuthInterceptor();
 	}
+	@Bean
+	public GuestInterceptor guestInterceptor() {
+		return new GuestInterceptor();
+	}
 	
 	//
 	// Interceptor
@@ -63,6 +68,11 @@ public class SecurityConfig extends WebMvcConfigurerAdapter {
 		.excludePathPatterns("/member/auth")
 		.excludePathPatterns("/member/logout")
 		.excludePathPatterns("/assets/**");
+		
+		registry
+		.addInterceptor(guestInterceptor())
+		.addPathPatterns("/basket/**");
+		
 	}
 }
 

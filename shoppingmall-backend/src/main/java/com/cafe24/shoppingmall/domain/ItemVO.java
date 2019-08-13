@@ -14,5 +14,6 @@ public class ItemVO {
 	private Long itemNo;
 	@PositiveOrZero(message = ValidationMessage.STOCK_PATTERN)
 	private int stock;
+	private String optionDescription;
 	private List<OptionVO> optionList;
 }

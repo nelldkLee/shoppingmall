@@ -44,12 +44,12 @@
 				<option value="1">선택</option>
 				<c:forEach items="${productVO.itemList}" var="itemVO" varStatus="status">
 					<div class="row mb-4 pl-2">
-						<option value="${itemVO.itemNo}"><c:forEach items="${itemVO.optionList}" var="optionVO" varStatus="i">${optionVO.optionName} : ${optionVO.optionValue} /</c:forEach> (재고수량 : ${itemVO.stock})</option>
+						<option value="${itemVO.itemNo}" data-stock="${itemVO.stock}"><c:forEach items="${itemVO.optionList}" var="optionVO" varStatus="i">${optionVO.optionName} : ${optionVO.optionValue} /</c:forEach> (재고수량 : ${itemVO.stock})</option>
 					</div>
 				</c:forEach>
             </select>
 			            
-            <p><a href="cart.html" class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
+            <p><a href="cart.html" class="buy-now btn btn-sm btn-primary" id="add_cart_button">Add To Cart</a></p>
 
           </div>
         </div>
@@ -131,9 +131,30 @@
         </div>
       </div>
     </div>
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p>상품이 장바구니에 담겼습니다.</p>
+				바로 확인 하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	        <a type="button" class="btn btn-primary" href="${pageContext.request.contextPath }/basket/view">예</a>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">아니요</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
     
     <template id="item_stock_template">
-    	<div class="row mb-4">
+    	<div class="row mb-4 item_row">
     		<div class="col-md-8" id="item_select">
     			
     		</div>
@@ -142,7 +163,7 @@
 	              <div class="input-group-prepend">
 	                <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
 	              </div>
-	              <input type="text" class="form-control text-center" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+	              <input type="text" id="count" class="form-control text-center" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
 	              <div class="input-group-append">
 	                <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
 	              </div>
@@ -151,15 +172,74 @@
 	    	</div>
     	</div>
     </template>
-    
+    </div>
     <c:import url="/WEB-INF/views/includes/footer.jsp" />
     <script>
     $('#itemSelectBox').change(function(e){
-    	var item = $(this).find("option:selected").text();
-    	var template = $($('#item_stock_template').html());
-    	template.find('#item_select').append(item);
-    	$('#itemSelectBox').after(template);
+    	var $target = $(this).find("option:selected");
+    	var item = $target.text();
+    	var itemNo = $target.val();
+    	var $template = $($('#item_stock_template').html());
+    	$template.find('#item_select').append(item);
+    	
+    	if($('#item_select[name="' + itemNo + '"]').length !== 0){
+    		alert('이미 선택된 상품입니다.');
+    		return;
+    	}
+    	$template.find('#item_select').attr('name',itemNo);
+    	$('#itemSelectBox').after($template);
     });
+    $('#add_cart_button').click(function(e){
+    	e.preventDefault();
+    	
+    	var itemList = [];
+    	console.log($('.item_row'));
+    	
+    	$('.item_row').each(function(e){
+    		var target = $(this);
+    		var item = { itemNo : target.find('#item_select').attr('name'), count : target.find('input#count').val() }
+    		
+    		itemList.push(item);
+    		
+    		if(item.count > $('option[value="' + item.itemNo + '"]').data('stock')){
+    			alert('재고 수량을 초과하였습니다.');
+    			return;
+    		}
+    	});
+    	console.log(JSON.stringify(itemList));
+    	
+    	$.ajax({
+			url: "${pageContext.request.contextPath }/basket/list",
+			type: "post",
+			contentType: "application/json", //post 방식으로  JSON Type으로 데이터를 보낼 때
+			dataType: "json",
+			data: JSON.stringify(itemList),
+			success: function(response){
+				if(response.result != "success"){
+					console.error(reponse.message);
+					return;
+				}
+				console.log(response);
+				if(response.result == "success"){
+					$('#exampleModal').modal();
+				}
+				
+			},
+			error: function(jqXHR, status, e){
+				console.error(status + ":" + e);
+			}
+		});
+    	
+    	
+    	
+    });
+    
+    function checkValidation(){
+    	
+    	console.log(itemList);
+    	
+    };
+    
     </script>
   </body>
 </html>

@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.cafe24.front.shoppingmall.domain.Criteria;
-import com.cafe24.front.shoppingmall.dto.JSONResult;
+import com.cafe24.front.shoppingmall.dto.JSONResultHashMap;
+import com.cafe24.front.shoppingmall.dto.JSONResultListHashMap;
 
 @Service
 public class ProductService {
@@ -37,9 +38,4 @@ public class ProductService {
 		return resultMap.getData();
 	}
 	
-	
-	private static class JSONResultListHashMap extends JSONResult<List<Map<String, Object>>> {
-	}
-	private static class JSONResultHashMap extends JSONResult<Map<String, Object>> {
-	}
 }

@@ -21,4 +21,5 @@ public class BasketController extends AbstractRESTController<BasketVO, BasketSer
 		service.insertList(basketList);
 		return JSONResult.success(null);	
 	}
+	
 }
