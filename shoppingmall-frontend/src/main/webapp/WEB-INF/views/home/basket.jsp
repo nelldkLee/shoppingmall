@@ -21,54 +21,57 @@
         </div>
       </div>
     </div>
-	${basketList}
-	
     <div class="site-section">
       <div class="container">
+        <form class="col-md-12" method="post" action="${pageContext.servletContext.contextPath }/order/register" id="basket_form" >
         <div class="row mb-5">
-          <form class="col-md-12" method="post">
             <div class="site-blocks-table">
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <th class="product-thumbnail">Image</th>
-                    <th class="product-name">Product</th>
-                    <th class="product-price">Price</th>
-                    <th class="product-quantity">Quantity</th>
-                    <th class="product-total">Total</th>
-                    <th class="product-remove">Remove</th>
+                    <th class="product-thumbnail">이미지</th>
+                    <th class="product-name">상품명</th>
+                    <th class="product-price">가격</th>
+                    <th class="product-quantity">수량</th>
+                    <th class="product-total">가격</th>
+                    <th class="product-remove">&nbsp;</th>
                   </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${basketList}" var="basketVO" varStatus="status">	
-                  <tr>
+                <c:forEach items="${basketList}" var="basketVO" varStatus="status">
+                  <input type="hidden" name="orderItemList[${status.index}].itemNo" value="${basketVO.itemNo}">
+                  <input type="hidden" name="orderItemList[${status.index}].optionDescription" value="${basketVO.itemVo.optionDescription}">
+                  <input type="hidden" name="orderItemList[${status.index}].price" value="${basketVO.price}">
+                  <input type="hidden" name="orderItemList[${status.index}].productName" value="${basketVO.productName}">
+                  
+                  <tr class="tr_row" data-price="${basketVO.price}">
                     <td class="product-thumbnail">
                       <img src="${pageContext.servletContext.contextPath }${basketVO.mainImagePath}" alt="Image" class="img-fluid">
                     </td>
                     <td class="product-name">
                       <h2 class="h5 text-black">${basketVO.productName}</h2>
+                      <p>${basketVO.itemVo.optionDescription}</p>
                     </td>
-                    <td>${basketVO.price}</td>
+                    <td><fmt:formatNumber value="${basketVO.price}" pattern="#,###"/></td>
                     <td>
-                      <div class="input-group mb-3" style="max-width: 120px;">
+                      <div class="input-group" style="max-width: 100%;">
                         <div class="input-group-prepend">
                           <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
                         </div>
-                        <input type="text" class="form-control text-center" value="${basketVO.count}" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        <input type="text" name="orderItemList[${status.index}].count" class="form-control text-center" value="${basketVO.count}" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
                         <div class="input-group-append">
                           <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
                         </div>
                       </div>
-
                     </td>
-                    <td>$49.00</td>
+                    <td class="sub_total">${basketVO.subTotalPrice}</td>
                     <td><a href="#" class="btn btn-primary btn-sm">X</a></td>
                   </tr>
 				</c:forEach>
                 </tbody>
               </table>
             </div>
-          </form>
+          
         </div>
 
         <div class="row">
@@ -102,14 +105,6 @@
                     <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
                   </div>
                 </div>
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <span class="text-black">Subtotal</span>
-                  </div>
-                  <div class="col-md-6 text-right">
-                    <strong class="text-black">$230.00</strong>
-                  </div>
-                </div>
                 <div class="row mb-5">
                   <div class="col-md-6">
                     <span class="text-black">Total</span>
@@ -121,15 +116,39 @@
 
                 <div class="row">
                   <div class="col-md-12">
-                    <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='checkout.html'">Proceed To Checkout</button>
+                    <button id="basket_post" class="btn btn-primary btn-lg py-3 btn-block">Proceed To Checkout</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        </form>
       </div>
     </div>
-	<c:import url="/WEB-INF/views/includes/footer.jsp" />
+   <c:import url="/WEB-INF/views/includes/footer.jsp" />
+	<script>
+	$(".tr_row").on("change","input", function(e){
+		console.log(e);
+	});
+	$(".tr_row").on("click",".btn", function(e){
+		console.log(e);
+		var count = parseInt($(this).closest('.input-group').find('input').val());
+		var price = parseInt($(this).closest('.tr_row').data('price'));
+		var subTotal = count * price;
+		$(this).closest('.tr_row').find('.sub_total').text(subTotal);
+	});
+	/* $('#basket_post').click(function(e){
+		e.preventDefault();
+		var obj = $('form#basket_form').serializeObject();
+		console.log(obj);
+		$.
+	}); */
+	
+	
+	
+	
+	
+	</script>
   </body>
 </html>

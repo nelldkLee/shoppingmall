@@ -7,14 +7,18 @@ import org.springframework.stereotype.Service;
 
 import com.cafe24.shoppingmall.domain.BasketVO;
 import com.cafe24.shoppingmall.domain.Criteria;
+import com.cafe24.shoppingmall.domain.ItemVO;
 import com.cafe24.shoppingmall.domain.MemberVO;
 import com.cafe24.shoppingmall.mapper.BasketMapper;
+import com.cafe24.shoppingmall.mapper.ItemMapper;
 
 @Service
 public class BaseBasketService implements BasketService{
 
 	@Autowired
 	private BasketMapper mapper;
+	@Autowired
+	private ItemMapper itemMapper;
 	
 	@Override
 	public void insert(BasketVO vo) {
@@ -44,7 +48,14 @@ public class BaseBasketService implements BasketService{
 
 	@Override
 	public List<BasketVO> getList(Criteria cri) {
-		return mapper.getList(cri);
+		List<BasketVO> basketList = mapper.getList(cri);
+		basketList.forEach(basketVO->{
+			ItemVO itemVO = itemMapper.read(basketVO.getItemNo());
+			itemVO.makeOptionDescription();
+			basketVO.getItemVo().setOptionDescription(itemVO.getOptionDescription());
+		});
+		
+		return basketList;
 	}
 
 	@Override

@@ -22,32 +22,25 @@ import com.cafe24.front.shoppingmall.service.BasketService;
 
 @Controller
 @RequestMapping("/basket")
-public class BasketController implements DefaultController{
+public class BasketController{
 
 	@Autowired
 	private BasketService basketService;
 	
-	@Override
 	public void list(HashMap<String, Object> map, Model model) throws Exception {
 		
 	}
 	
-	@Override
 	@GetMapping("/view")
-	public String view(Criteria cri, Model model) throws Exception {
+	public String view(Criteria cri, Model model, @CookieValue(name = "GeustSessionId", required = false) String geustSessionId, @AuthUser MemberVO memberVO) throws Exception {
+
+		if(memberVO == null) {
+			cri.setSessionId(geustSessionId);
+		}else {
+			cri.setMemberNo(memberVO.getMemberNo());
+		}
 		model.addAttribute("basketList",basketService.getList(cri));
 		return "home/basket";
-	}
-
-	@Override
-	public void register(HashMap<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String registerPost(HashMap<String, Object> map, RedirectAttributes rttr) {
-		return null;
 	}
 	
 	@PostMapping("/list")
@@ -64,23 +57,4 @@ public class BasketController implements DefaultController{
 		return basketService.register(listMap);
 		
 	}
-
-	@Override
-	public void modify(HashMap<String, Object> map, Model model) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String modify(HashMap<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String removePost(HashMap<String, Object> map, Model model, RedirectAttributes rttr) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

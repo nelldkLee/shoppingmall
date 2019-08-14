@@ -13,6 +13,19 @@ public class BasketVO {
 	private int count;
 	private String productName;
 	private Long price;
+	private Long subTotalPrice;
 	private String mainImagePath;
 	private ItemVO itemVo;
+	
+	public void makeItemDescripion(List<ItemVO> itemList) {
+		itemList.forEach((itemVO)->{
+			if(itemNo == itemVO.getItemNo()) {
+				itemVo.setOptionDescription(itemVO.getOptionDescription());
+			}
+		});
+	}
+	public Long getSubTotalPrice() {
+		return count * price;
+	}
+
 }

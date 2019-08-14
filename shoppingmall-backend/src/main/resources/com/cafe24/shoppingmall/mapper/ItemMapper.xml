@@ -22,8 +22,20 @@
 		</selectKey>
 	</insert>
 	
+	<resultMap type="com.cafe24.shoppingmall.domain.ItemVO" id="itemMap">
+		<id property="itemNo" column="itemNo" />
+		<collection property="optionList" resultMap="optionMap" />
+	</resultMap>
+	<resultMap type="com.cafe24.shoppingmall.domain.OptionVO" id="optionMap">
+		<result property="optionName" column="optionName" />
+		<result property="optionValue" column="optionValue" />
+	</resultMap>
 	
-	<select id="read" resultType="itemvo" parameterType="long">
+	<select id="read" resultMap="itemMap" parameterType="long">
+		SELECT i.item_no itemNo, stock, o.option_name optionName, o.option_value optionValue
+			FROM item i, option o 
+		WHERE 	i.item_no = o.item_no and 
+				i.item_no = #{itemNo}
 	</select>
 	
 	<update id="update" parameterType="itemvo">
@@ -36,8 +48,10 @@
 		DELETE from item WHERE item_no = #{itemNo} 
 	</delete>
 	
-	<!-- 해야할 것 BasketMapper 참조 -->
 	<select id="getList" parameterType="criteria" resultType="itemvo">
+		SELECT item_no itemNo, stock 
+			FROM item 
+		WHERE item_no = #{itemNo} 
 	</select>
 	
 	<select id="getTotal" resultType="int">

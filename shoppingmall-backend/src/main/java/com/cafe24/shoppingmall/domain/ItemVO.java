@@ -16,4 +16,13 @@ public class ItemVO {
 	private int stock;
 	private String optionDescription;
 	private List<OptionVO> optionList;
+	
+	public void makeOptionDescription() {
+		StringBuilder builder = new StringBuilder();
+		optionList.forEach((optionVO)->{
+			builder.append(optionVO.getOptionName() + " : " + optionVO.getOptionValue() + " / ");
+		});
+		optionDescription = builder.toString().substring(0, builder.length() - 2);
+		
+	}
 }

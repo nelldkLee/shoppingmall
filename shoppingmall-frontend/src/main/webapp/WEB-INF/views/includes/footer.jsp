@@ -87,3 +87,4 @@
 <script	src="${pageContext.servletContext.contextPath }/assets/home/js/jquery.magnific-popup.min.js"></script>
 <script	src="${pageContext.servletContext.contextPath }/assets/home/js/aos.js"></script>
 <script	src="${pageContext.servletContext.contextPath }/assets/home/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-serialize-object/2.5.0/jquery.serialize-object.min.js"></script>

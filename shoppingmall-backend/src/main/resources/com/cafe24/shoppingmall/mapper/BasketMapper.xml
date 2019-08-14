@@ -67,7 +67,7 @@
 	insert 하기전에 기존에 장바구니에 담겨져있는지 확인 할 때도 사용된다.
 	-->
 	<resultMap type="com.cafe24.shoppingmall.domain.BasketVO" id="basketMap">
-		<id property="itemNo" column="a.item_no" />
+		<id property="itemNo" column="item_no" />
 		<result property="basketNo" column="basket_no" />
 		<result property="productName" column="product_name" />
 		<result property="count" column="count" />
