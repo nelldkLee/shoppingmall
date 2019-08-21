@@ -81,7 +81,7 @@
                 <button class="btn btn-primary btn-sm btn-block">Update Cart</button>
               </div>
               <div class="col-md-6">
-                <button class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</button>
+                <button class="btn btn-outline-primary btn-sm btn-block" id="continue_shopping">Continue Shopping</button>
               </div>
             </div>
             <div class="row">
@@ -137,6 +137,11 @@
 		var price = parseInt($(this).closest('.tr_row').data('price'));
 		var subTotal = count * price;
 		$(this).closest('.tr_row').find('.sub_total').text(subTotal);
+	});
+	$('#continue_shopping').click(function(e){
+		e.preventDefault();
+		e.stopPropagation();
+		location.href = '${pageContext.servletContext.contextPath }';
 	});
 	/* $('#basket_post').click(function(e){
 		e.preventDefault();

@@ -11,13 +11,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cafe24.front.shoppingmall.domain.Criteria;
 import com.cafe24.front.shoppingmall.service.BasketService;
+import com.cafe24.front.shoppingmall.service.ProductService;
 
 @Controller
 @RequestMapping("/product")
 public class ProductController implements DefaultController{
 
 	@Autowired
-	private BasketService basketService;
+	private ProductService productService;
 	
 	@Override
 	public void list(HashMap<String, Object> map, Model model) throws Exception {
@@ -26,7 +27,7 @@ public class ProductController implements DefaultController{
 	@Override
 	@GetMapping("/view")
 	public String view(Criteria cri, Model model) throws Exception {
-		model.addAttribute("basketVO",basketService.getList(cri));
+		model.addAttribute("productVO",productService.view(cri));
 		return "home/productDetail";
 	}
 
